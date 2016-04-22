@@ -9,7 +9,7 @@ angular.module('roadtrippin.maps', ['gservice'])
       document.getElementById('start'), {
       types: ['geocode']
     });
-    
+
     startAutoComplete.addListener('place_changed', function() {
       $scope.route.start = startAutoComplete.getPlace().formatted_address;
         var place = startAutoComplete.getPlace();
@@ -29,6 +29,9 @@ angular.module('roadtrippin.maps', ['gservice'])
 
     //this is a call to our Google maps API factory for directions
     $scope.getRoute = function() {
+      // If start/end not set by autocomplete, set from value of field.
+      $scope.route.start = $scope.route.start || document.getElementById('start').value;
+      $scope.route.end = $scope.route.end || document.getElementById('end').value;
       gservice.calcRoute($scope.route.start, $scope.route.end, $scope.route.numStops)
         .then(function(places) { splitLocations(places); });
         $scope.startInput = '';
