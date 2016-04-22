@@ -79,4 +79,15 @@ module.exports = {
   errorHandler: function (error, req, res, next) {
     res.status(500).send({error: error.message});
   }
+
+  getAllTrips: function (req, res, next) {
+    var username = req.body.username;
+    findUser({username: username})
+      .then(function(user) {
+        res.status(200).json(user.trips);
+      })
+      .fail(function(error) {
+        next(error);
+      });
+  }
 };
