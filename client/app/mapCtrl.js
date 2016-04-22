@@ -36,6 +36,8 @@ angular.module('roadtrippin.maps', ['gservice'])
         .then(function(places) { splitLocations(places); });
         $scope.startInput = '';
         $scope.endInput = '';
+        $scope.route.start = null;
+        $scope.route.end = null;
     };
 
     var splitLocations = function (places) {
