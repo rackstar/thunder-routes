@@ -138,31 +138,35 @@ angular.module('gservice', [])
         var doneSoFar = 0; //counter for async for loop
         for (var i = 0; i < placeRequests.length; i++) {
           var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'), placeRequests[i].location);
-          placesService.textSearch(placeRequests[i], function (res, status) {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
+
+          placesService.textSearch(placeRequests[i], callback);
+        }
+
+        function callback (res, status) {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
               var place = {
                 location: res[0].formatted_address,
                 name: res[0].name
               };
               placesToStop.push(place);
               doneSoFar++;
-              if (doneSoFar === placeRequests.length) {
-                deferred.resolve(placesToStop);
-              }
-            } else { //if Google doesn't send an OK status
-              deferred.reject('we had a problem');
+            if (doneSoFar === placeRequests.length) {
+              deferred.resolve(placesToStop);
             }
-          });
-        }
+          } else { //if Google doesn't send an OK status
+            deferred.reject('we had a problem');
+          }
+        };
+
         return deferred.promise;
       };
 
       //Record order in 'position' property of each waypoint
       var sortWaypoints = function (waypointOrder) {
-        for (var i = 0; i < googleMapService.thisTrip.waypoints.length; i++) {
-          var waypoint = googleMapService.thisTrip.waypoints[i];
-          var position = waypointOrder[i];
-          waypoint.position = position;
+        for (var i = 0; i < waypointOrder.length; i++) {
+          var index = waypointOrder[i]
+          var waypoint = googleMapService.thisTrip.waypoints[index];
+          waypoint.position = i;
         }
         return;
       };

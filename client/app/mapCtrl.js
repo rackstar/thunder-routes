@@ -13,7 +13,7 @@ angular.module('roadtrippin.maps', ['gservice'])
     startAutoComplete.addListener('place_changed', function() {
       $scope.route.start = startAutoComplete.getPlace().formatted_address;
         var place = startAutoComplete.getPlace();
-        console.log('place', place);   
+        console.log('place', place);
         console.log($scope.route.start); 
     });
 
