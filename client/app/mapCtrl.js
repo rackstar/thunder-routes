@@ -34,8 +34,6 @@ angular.module('roadtrippin.maps', ['gservice'])
       $scope.route.end = $scope.route.end || document.getElementById('end').value;
       gservice.calcRoute($scope.route.start, $scope.route.end, $scope.route.numStops)
         .then(function(places) { splitLocations(places); });
-        $scope.startInput = '';
-        $scope.endInput = '';
         $scope.route.start = null;
         $scope.route.end = null;
     };
