@@ -2,6 +2,7 @@ var Q = require('q');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var SALT_WORK_FACTOR = 10;
+var Trips = require('../trip/tripModel.js');
 
 var UserSchema = new mongoose.Schema({
   username: {
@@ -14,7 +15,8 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  salt: String
+  salt: String,
+  trips: [Trips]
 });
 
 UserSchema.methods.comparePasswords = function(attemptedPassword) {
