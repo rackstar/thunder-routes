@@ -1,8 +1,12 @@
 var Q = require('q');
 var Journey = require('./journeyModel.js');
+var Trip = require('../trip/tripModel.js');
 
 var findJourney = Q.nbind(Journey.findOne, Journey);
 var createJourney = Q.nbind(Journey.create, Journey);
+
+var findTrip = Q.nbind(Trip.findOne, Trip);
+var createTrip = Q.nbind(Trip.create, Trip);
 
 module.exports = {
   saveJourney: function (req, res, next) {
@@ -17,14 +21,22 @@ module.exports = {
     var waypointsCopy = [].concat.apply([], waypoints);
     waypoints = waypointsCopy;
 
-    findJourney({wayPoints: waypoints})
-      .then(function (waypoint) {
-        if (!waypoint) {
-          return createJourney({
+    findTrip({ _id: req.body.trip_id })
+      .then(function (trip) {
+        var found = false;
+        trip.journeys.forEach(function(journey) {
+          if(journey.wayPoints === waypoints) {
+            found = true;
+          }
+        });
+        if(!found) {
+          trip.journeys.push({
             startPoint: start,
             endPoint: end,
             wayPoints: waypoints
           });
+          trip.save();
+          res.status(201).json(trip.journeys);
         } else {
           next(new Error('Journey already exist!'));
         }
@@ -32,6 +44,22 @@ module.exports = {
       .catch(function (error) {
         next(error);
       });
+
+    // findJourney({wayPoints: waypoints})
+    //   .then(function (waypoint) {
+    //     if (!waypoint) {
+    //       return createJourney({
+    //         startPoint: start,
+    //         endPoint: end,
+    //         wayPoints: waypoints
+    //       });
+    //     } else {
+    //       next(new Error('Journey already exist!'));
+    //     }
+    //   })
+    //   .catch(function (error) {
+    //     next(error);
+    //   });
   },
 
   getAll: function (req, res, next) {
