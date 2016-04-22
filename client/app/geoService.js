@@ -142,7 +142,8 @@ angular.module('gservice', [])
             if (status == google.maps.places.PlacesServiceStatus.OK) {
               var place = {
                 location: res[0].formatted_address,
-                name: res[0].name
+                name: res[0].name,
+                position: i
               };
               placesToStop.push(place);
               doneSoFar++;
