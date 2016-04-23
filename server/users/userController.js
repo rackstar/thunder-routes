@@ -34,15 +34,17 @@ module.exports = {
   signup: function(req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
-    
-    findUser({username: username})
+    var email = req.body.email;
+
+    findUser({$or: [{username: username}, {email: email}]})
       .then(function(user) {
         if (user) {
           next(new Error('User already exists'));
         } else {
           return createUser({
             username: username,
-            password: password
+            password: password,
+            email: email
           });
         }
       })
@@ -78,16 +80,5 @@ module.exports = {
 
   errorHandler: function (error, req, res, next) {
     res.status(500).send({error: error.message});
-  },
-
-  getAllTrips: function (req, res, next) {
-    var username = req.body.username;
-    findUser({username: username})
-      .then(function(user) {
-        res.status(200).json(user.trips);
-      })
-      .fail(function(error) {
-        next(error);
-      });
   }
 };
