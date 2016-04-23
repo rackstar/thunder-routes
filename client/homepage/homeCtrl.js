@@ -1,13 +1,15 @@
 angular.module('roadtrippin.home', [])
-  .controller('homeController', function($scope, mapFactory, tripFactory) {
-    $scope.trips = [];
+  .controller('homeController', function($scope, $window, mapFactory, tripFactory) {
+    $scope.savedRoutes = [];
     $scope.input = {
+      tripname: '',
       start: '',
       end: '',
       inviteFields: ['']
     };
     $scope.isTripsClosed = false;
     $scope.isCreateClosed = false;
+    $scope.username = $window.localStorage.getItem('username')
 
     mapFactory.locationAutoComplete('start', function(address) {
       $scope.input.start = address;

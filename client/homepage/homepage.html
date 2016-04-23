@@ -22,8 +22,10 @@
 <form class="form-inline" ng-show="!isCreateClosed">
   <div class="form-group">
     <div class="row">
+    <label for="tripname">Trip Name: </label>
+      <input id="tripname" type="text" class="form-control" autofocus placeholder="Trip name here" ng-model="input.tripname">
       <label for="start">Start: </label>
-      <input id="start" type="text" class="form-control" autofocus placeholder="Start here" ng-model="input.start" />
+      <input id="start" type="text" class="form-control" placeholder="Start here" ng-model="input.start" />
       <label for="end">Destination: </label>
       <input id="end" type="text" class="form-control" placeholder="End here" ng-model="input.end" />
       </select>
@@ -41,7 +43,7 @@
       </div>
     </div>
   </div>
-</form> -->
+</form>
 
 <!-- Saved trips -->
 <a class="infoHeader" ng-click="isTripsClosed = !isTripsClosed"><h3>
