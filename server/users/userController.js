@@ -78,7 +78,7 @@ module.exports = {
 
   errorHandler: function (error, req, res, next) {
     res.status(500).send({error: error.message});
-  }
+  },
 
   getAllTrips: function (req, res, next) {
     var username = req.body.username;
