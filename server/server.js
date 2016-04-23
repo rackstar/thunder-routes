@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var parser = require('body-parser');
 var userController = require('./users/userController.js');
 var journeyController = require('./journey/journeyController.js');
+var tripController = require('./trip/tripController.js');
 
 var app = express();
 

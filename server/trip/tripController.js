@@ -3,6 +3,7 @@ var User = require('../users/userModel.js');
 var Q = require('q');
 
 var findTrip = Q.nbind(Trip.findOne, Trip);
+var findTrips = Q.nbind(Trip.find, Trip);
 var createTrip = Q.nbind(Trip.create, Trip);
 
 var findUser = Q.nbind(User.findOne, User);
@@ -13,7 +14,10 @@ module.exports = {
     var username = req.params.username;
     findUser({username: username})
       .then(function(user) {
-        res.status(200).json(user.trips);
+        findTrips({_id: {$in: user.trips}})
+          .then(function(trips) {
+            res.status(200).json(trips);
+          })
       })
       .fail(function(error) {
         next(error);
