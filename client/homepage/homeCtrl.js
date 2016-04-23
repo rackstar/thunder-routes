@@ -17,7 +17,7 @@ angular.module('roadtrippin.home', [])
     });
 
     $scope.createTrip = function() {
-      console.log($scope.input);
+      tripFactory.addTrip($scope.username, $scope.input.tripname);
     };
 
     $scope.addInviteField = function() {
@@ -33,7 +33,7 @@ angular.module('roadtrippin.home', [])
     };
 
     $scope.getAllTrips = function() {
-      $scope.trips = tripFactory.getAllTrips();
+      $scope.savedRoutes = tripFactory.getAllTrips($scope.username);
     };
     $scope.getAllTrips();
   });
