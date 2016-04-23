@@ -26,14 +26,18 @@ module.exports = {
 
   addTrip: function(req, res, next) {
     var username = req.body.username;
-    var tripName = req.body.tripname;
+    var tripname = req.body.tripname;
     findUser({username: username})
       .then(function(user) {
-        createTrip({
-          name: tripName,
-          users: user._id
-        })
+        var newTrip = new Trip({
+          name: tripname,
+          creator: user._id
+        });
+        newTrip.save()
           .then(function(trip) {
+            console.log(trip)
+            trip.users.push(user._id);
+            trip.save();
             user.trips.push(trip._id);
             user.save();
           });

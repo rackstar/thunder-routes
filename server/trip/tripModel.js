@@ -6,7 +6,14 @@ var User = require('../users/userModel.js');
 var Schema = mongoose.Schema;
 
 var TripSchema = new Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true
+  },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   users: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
@@ -21,4 +28,4 @@ var TripSchema = new Schema({
   timestamps: true
 });
 
-module.exports = TripSchema;
+module.exports = mongoose.model('trips', TripSchema);
