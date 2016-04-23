@@ -1,8 +1,9 @@
 angular.module('roadtrippin', [
-  'roadtrippin.home',
   'roadtrippin.maps',
   'roadtrippin.mapsFactory',
+  'roadtrippin.tripFactory',
   'gservice',
+  'roadtrippin.home',
   'roadtrippin.auth',
   'roadtrippin.authFactory',
   'ui.router'
