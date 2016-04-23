@@ -1,4 +1,5 @@
 angular.module('roadtrippin', [
+  'roadtrippin.home',
   'roadtrippin.maps',
   'roadtrippin.mapsFactory',
   'gservice',
@@ -13,17 +14,23 @@ angular.module('roadtrippin', [
   $stateProvider
     .state('signin', {
       url: '/signin',
-      templateUrl: './../auth/signin.html',
+      templateUrl: './auth/signin.html',
       controller: 'authController'
     })
     .state('signup', {
       url: '/signup',
-      templateUrl: './../auth/signup.html',
+      templateUrl: './auth/signup.html',
       controller: 'authController'
     })
     .state('homepage', {
       url: '/homepage',
-      templateUrl: './../auth/homepage.html',
+      templateUrl: './homepage/homepage.html',
+      controller: 'homeController',
+      authenticate: true
+    })
+    .state('trip', {
+      url: '/trip/:tripID',
+      templateUrl: './trip/trip.html',
       controller: 'mapController',
       authenticate: true
     });
