@@ -8,5 +8,11 @@ module.exports = function(app, express) {
   app.get('/saveJourney', journeyController.getAll);
   app.post('/signin', userController.signin);
   app.post('/signup', userController.signup);
+
+  app.route('/chat')
+    .post(chatController.getChat)
+
+  app.post('/chat/setup', chatController.setup);
+
   app.use(userController.errorHandler);
 }
