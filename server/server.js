@@ -22,9 +22,9 @@ db.once('open', function() {
 });
   
 
-app.post('/saveJourney', journeyController.saveJourney);
-// app.get('/saveJourney', journeyController.getAll);
-app.get('/getAllTrips/:user_id', userController.getAllTrips);
+app.post('/addJourney', journeyController.addJourney);
+app.post('/addTrip', tripController.addTrip);
+app.get('/getAllTrips/:username', tripController.getAllTrips);
 app.post('/signin', userController.signin);
 app.post('/signup', userController.signup);
 app.use(userController.errorHandler);
