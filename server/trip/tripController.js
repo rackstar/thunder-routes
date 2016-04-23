@@ -37,10 +37,21 @@ module.exports = {
             user.trips.push(trip._id);
             user.save();
           });
-    })
-    .catch(function (error) {
+      })
+      .catch(function (error) {
+          next(error);
+      });
+  },
+
+  getTrip: function(req, res, next) {
+    var tripId = req.params.tripId;
+    findTrip({_id: tripId})
+      .then(function(trip) {
+        res.status(200).json(trip);
+      })
+      .catch(function (error) {
         next(error);
-    });
+      });
   },
 
   addUser: function(req, res, next) {

@@ -21,10 +21,11 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Mongoose is connected');
 });
-  
+
 
 app.post('/addJourney', journeyController.addJourney);
 app.post('/addTrip', tripController.addTrip);
+app.get('/getTrip/:tripId', tripController.getTrip);
 app.get('/getAllTrips/:username', tripController.getAllTrips);
 app.post('/signin', userController.signin);
 app.post('/signup', userController.signup);
