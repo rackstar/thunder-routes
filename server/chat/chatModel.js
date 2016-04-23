@@ -6,9 +6,7 @@ var ChatSchema = Schema({
   message: String,
   username: String,
   trip_id: { type: Schema.Types.ObjectId }
-},
-{
-  timestamps: true
+  created: { type: Date, default: new Date() },
 });
 
-var Chat = mongoose.model('chat', ChatSchema)
+module.exports = mongoose.model('Chat', ChatSchema)
