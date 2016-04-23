@@ -11,4 +11,4 @@ var ChatSchema = Schema({
   timestamps: true
 });
 
-var Chat = mongoose.model('chat', ChatSchema)
+module.exports = mongoose.model('chat', ChatSchema)
