@@ -5,26 +5,11 @@ angular.module('roadtrippin.maps', ['gservice'])
     $scope.places = [];
     $scope.savedRoutes = [];
 
-    var startAutoComplete = new google.maps.places.Autocomplete(
-      document.getElementById('start'), {
-      types: ['geocode']
+    mapFactory.locationAutoComplete('start', function(address) {
+      $scope.input.start = address;
     });
-
-    startAutoComplete.addListener('place_changed', function() {
-      $scope.route.start = startAutoComplete.getPlace().formatted_address;
-        var place = startAutoComplete.getPlace();
-        console.log('place', place);
-        console.log($scope.route.start); 
-    });
-
-    var endAutoComplete = new google.maps.places.Autocomplete(
-      document.getElementById('end'), {
-      types: ['geocode']
-    });
-
-    endAutoComplete.addListener('place_changed', function() {
-      $scope.route.end = endAutoComplete.getPlace().formatted_address;
-      $(this).val('') ;   
+    mapFactory.locationAutoComplete('end', function(address) {
+      $scope.input.end = address;
     });
 
     //this is a call to our Google maps API factory for directions
