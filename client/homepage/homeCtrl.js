@@ -2,10 +2,14 @@ angular.module('roadtrippin.home', [])
   .controller('homeController', function($scope, $window, mapFactory, tripFactory) {
     $scope.savedRoutes = [];
     $scope.input = {
+<<<<<<< Updated upstream
       tripname: '',
       start: '',
       end: '',
       inviteFields: ['']
+=======
+      tripname: ''
+>>>>>>> Stashed changes
     };
     $scope.isTripsClosed = false;
     $scope.isCreateClosed = false;
