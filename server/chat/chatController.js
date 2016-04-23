@@ -13,6 +13,19 @@ module.exports = {
       })
   },
 
+  newMsg: function(data, io) {
+    var newMsg = new Chat({
+      username: data.username,
+      message: data.message,
+      trip_id: data.trip_id,
+      created: new Date()
+    });
+    newMsg.save(function(err, msg) {
+      io.in(msg.trip_id).emit('message create', msg);
+      console.log(msg);
+    });
+  },
+
   setup: function(req, res, next) {
       //Array of chat data. Each object properties must match the schema object properties
       var chatData = [{
