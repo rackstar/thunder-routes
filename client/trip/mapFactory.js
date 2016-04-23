@@ -19,7 +19,7 @@ angular.module('roadtrippin.mapsFactory', [])
       var deferred = $q.defer ();
       $http({
         method: 'POST',
-        url: '/saveJourney',
+        url: '/addJourney',
         data: JSON.stringify(tripObject)
       }).then(function (res) {
         deferred.resolve (res);
@@ -29,11 +29,11 @@ angular.module('roadtrippin.mapsFactory', [])
       return deferred.promise;
     };
 
-    var getAllRoutes = function(user_id) {
+    var getTrip = function(trip_id) {
       var deferred = $q.defer();
       $http({
         method: 'GET',
-        url: '/getAllTrips/' + user_id
+        url: '/getTrip/' + trip_id
       }).then(function (res) {
         deferred.resolve (res.data);
       }).catch(function (err) {
@@ -50,7 +50,7 @@ angular.module('roadtrippin.mapsFactory', [])
     return {
       locationAutoComplete: locationAutoComplete,
       saveJourneyWithWaypoints: saveJourneyWithWaypoints,
-      getAllRoutes: getAllRoutes,
+      getTrip: getTrip,
       signout: signout
     };
   });

@@ -1,5 +1,6 @@
 angular.module('roadtrippin.home', [])
-  .controller('homeController', function($scope, mapFactory) {
+  .controller('homeController', function($scope, mapFactory, tripFactory) {
+    $scope.trips = [];
     $scope.input = {
       start: '',
       end: '',
@@ -30,4 +31,9 @@ angular.module('roadtrippin.home', [])
     $scope.signout = function () {
       mapFactory.signout();
     };
+
+    $scope.getAllTrips = function() {
+      $scope.trips = tripFactory.getAllTrips();
+    };
+    $scope.getAllTrips();
   });
