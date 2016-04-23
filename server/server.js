@@ -1,4 +1,5 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var morgan = require('morgan');
@@ -7,7 +8,7 @@ var parser = require('body-parser');
 var userController = require('./users/userController.js');
 var journeyController = require('./journey/journeyController.js');
 var tripController = require('./trip/tripController.js');
-
+var chatController = require('./chat/chatController.js');
 
 
 // MIDDEWARE
@@ -38,15 +39,30 @@ app.post('/signin', userController.signin);
 app.post('/signup', userController.signup);
 app.use(userController.errorHandler);
 
+app.post('/chat', chatController.getChat);
+app.post('/chat/setup', chatController.setup);
+
+
 // SOCKET.IO
-io.on('connection', function(socket) {
+io.on('connection', function(socket){
   console.log('a user connected');
-})
+ 
+  socket.on('new message', function(msg){
+    chatController.newMsg(msg);
+
+    io.emit('message saved', msg);
+  });
+
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+});
+
 
 // CONNECTION
 var port = process.env.PORT || 8080;
 
-app.listen(port, function() {
+http.listen(port, function() {
   console.log('Listening to: ' + port);
 });
 
