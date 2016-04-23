@@ -32,14 +32,8 @@ angular.module('roadtrippin.tripFactory', [])
       return deferred.promise;
     };
 
-    var signout = function() {
-      $window.localStorage.removeItem('com.roadtrippin');
-      $location.path('/signin');
-    };
-
     return {
       addTrip: addTrip,
-      getAllTrips: getAllTrips,
-      signout: signout
+      getAllTrips: getAllTrips
     };
   });
