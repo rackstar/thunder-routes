@@ -42,7 +42,10 @@ module.exports = {
         } else {
           return createUser({
             username: username,
-            password: password
+            password: password,
+            trips: {
+              tripName: 'majorca'
+            }
           });
         }
       })
