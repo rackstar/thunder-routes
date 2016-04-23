@@ -63,7 +63,6 @@ h1 {
 }
 
 .dropdown-menu>li>a:hover {
-  text-decoration: none;
   color: #F2932E;
 }
 
@@ -87,7 +86,6 @@ form * {
 }
 
 .btn a:hover {
-  text-decoration: none;
   color: #333;
 }
 
@@ -126,6 +124,11 @@ h3 {
  color: #FFF;
  padding: 10px 0;
  background-color: #003136;
+}
+
+a:hover {
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .savedRoutes {
