@@ -3,8 +3,9 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var SALT_WORK_FACTOR = 10;
 var Trip = require('../trip/tripModel.js');
+var Schema = mongoose.Schema;
 
-var UserSchema = new mongoose.Schema({
+var UserSchema = new Schema({
   username: {
     type: String,
     required: true,
