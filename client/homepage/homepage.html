@@ -7,17 +7,48 @@
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li><a ui-sref="homepage">Home</a></li>
       <li><a href="#" id="signout" ng-click="signout()">Sign Out</a></li>
     </ul>
   </div>
   <h1 class="title col-xs-10">Thunder Routes</h1>
 </header>
 
+<a class="infoHeader" ng-click="isCreateClosed = !isCreateClosed"><h3>
+  <i class="fa fa-caret-right" ng-class="{'fa-rotate-90': !isCreateClosed}" aria-hidden="true"></i>
+  <span>Create a Trip</span>
+</h3></a>
+<!-- Form to create new trip -->
+<form class="form-inline" ng-show="!isCreateClosed">
+  <div class="form-group">
+    <div class="row">
+      <label for="start">Start: </label>
+      <input id="start" type="text" class="form-control" autofocus placeholder="Start here" ng-model="input.start" />
+      <label for="end">Destination: </label>
+      <input id="end" type="text" class="form-control" placeholder="End here" ng-model="input.end" />
+      </select>
+      <button id="search-btn" class="btn btn-default" ng-click="createTrip()">Create Trip</button>
+    </div>
+    <div class="row">
+      <div class="row" ng-repeat="field in input.inviteFields track by $index">
+        <label>Username: </label>
+        <input type="text" class="form-control" placeholder="Invite friend" 
+          ng-model="input.inviteFields[$index]" />
+        <button class="btn btn-default" ng-click="addInviteField()"
+          ng-show="$index === input.inviteFields.length - 1"> + </button>
+        <button class="btn btn-default" ng-click="removeInviteField()"
+          ng-show="$index && $index === input.inviteFields.length - 1"> - </button>
+      </div>
+    </div>
+  </div>
+</form>
 
-
-<!-- Saved routes -->
-<div class="col-xs-12 savedRoutes">
-  <h3 class="infoHeader"><i class="fa fa-caret-right fa-rotate-90" aria-hidden="true"></i>Saved Routes</h3>
+<!-- Saved trips -->
+<a class="infoHeader" ng-click="isTripsClosed = !isTripsClosed"><h3>
+  <i class="fa fa-caret-right" ng-class="{'fa-rotate-90': !isTripsClosed}" aria-hidden="true"></i>
+  <span>Saved Trips</span>
+</h3></a>
+<div class="col-xs-12 savedRoutes" ng-show="!isTripsClosed">
   <div class="row info save-routes" ng-repeat="route in savedRoutes">
     <div class="col-xs-4">
       <p class="route-start">From: {{ route.startPoint }}</p>
@@ -32,4 +63,3 @@
     </div>
   </div>
 </div>
-
