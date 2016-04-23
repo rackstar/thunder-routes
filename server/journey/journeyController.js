@@ -9,7 +9,7 @@ var findTrip = Q.nbind(Trip.findOne, Trip);
 var createTrip = Q.nbind(Trip.create, Trip);
 
 module.exports = {
-  saveJourney: function (req, res, next) {
+  addJourney: function (req, res, next) {
     var start = req.body.start;
     var end = req.body.end;
     var waypoints = [];
@@ -60,15 +60,15 @@ module.exports = {
     //   .catch(function (error) {
     //     next(error);
     //   });
-  },
-
-  getAll: function (req, res, next) {
-    Journey.find({})
-      .then(function (data) {
-        res.status(200).send(data);
-      })
-      .catch(function(error) {
-        next(error);
-      });
   }
+
+  // getAll: function (req, res, next) {
+  //   Journey.find({})
+  //     .then(function (data) {
+  //       res.status(200).send(data);
+  //     })
+  //     .catch(function(error) {
+  //       next(error);
+  //     });
+  // }
 };
