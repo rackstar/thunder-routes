@@ -12,6 +12,7 @@ angular.module('roadtrippin.auth', [])
           if (token && typeof token !== 'object') {
             $scope.loginError = false;
             $window.localStorage.setItem('com.roadtrippin', token);
+            $window.localStorage.setItem('username', $scope.user.username);
             $location.path('/');
           } else if (typeof token === 'object') {
             $scope.loginError = true;
@@ -31,6 +32,7 @@ angular.module('roadtrippin.auth', [])
           if (token && typeof token !== 'object') { 
             $scope.loginError = false;
             $window.localStorage.setItem('com.roadtrippin', token);
+            $window.localStorage.setItem('username', $scope.user.username);
             $location.path('/');
           } else if (typeof token === 'object') {
             $scope.loginError = true;
