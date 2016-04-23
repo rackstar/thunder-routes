@@ -21,7 +21,8 @@ module.exports = {
       created: new Date()
     });
     newMsg.save(function(err, msg) {
-      io.in(msg.trip_id).emit('message create', msg);
+      // io.in(msg.trip_id).emit()
+      io.sockets.emit('message saved', msg);
       console.log(msg);
     });
   },

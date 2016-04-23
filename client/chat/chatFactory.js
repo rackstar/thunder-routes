@@ -1,5 +1,5 @@
 // TO DO - add module to app.js
-angular.module('chat', [])
+angular.module('chatFactory', [])
   .factory('socket', socket);
 
 var socket = function() {
