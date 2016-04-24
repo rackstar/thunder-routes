@@ -1,10 +1,13 @@
 angular.module('roadtrippin.maps', [])
-  .controller('mapController', function($scope, mapFactory, authFactory, gservice, $location, $anchorScroll) {
+  .controller('mapController', function($scope, $stateParams, mapFactory, authFactory, 
+    tripFactory, gservice, $location, $anchorScroll) {
     $scope.username = authFactory.getCurrentUser();
     $scope.route = {};
-    $scope.route.stopOptions = [1, 2, 3, 4, 5];
+    $scope.route.stopOptions = [0, 1, 2, 3, 4, 5];
+    $scope.route.numStops = 0;
     $scope.places = [];
     $scope.savedRoutes = [];
+    $scope.input = {};
 
     mapFactory.locationAutoComplete('start', function(address) {
       $scope.input.start = address;
@@ -12,6 +15,18 @@ angular.module('roadtrippin.maps', [])
     mapFactory.locationAutoComplete('end', function(address) {
       $scope.input.end = address;
     });
+
+    $scope.getTrip = function() {
+      tripFactory.getTrip($stateParams.tripId)
+        .then(function(trip) {
+          console.log(trip);
+          $scope.input.tripname = trip.name;
+          $scope.input.start = trip.journeys[0].startPoint;
+          $scope.input.end = trip.journeys[0].endPoint;
+          gservice.refresh();
+          gservice.render(trip.journeys[0].startPoint, trip.journeys[0].endPoint, trip.journeys[0].wayPoints);
+        });
+    };
 
     //this is a call to our Google maps API factory for directions
     $scope.getRoute = function() {
@@ -85,7 +100,7 @@ angular.module('roadtrippin.maps', [])
       }
     };
 
-    $scope.getAll();
+    $scope.getTrip();
 
     $scope.signout = function () {
       mapFactory.signout();

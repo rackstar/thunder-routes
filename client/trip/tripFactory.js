@@ -24,8 +24,20 @@ angular.module('roadtrippin.tripFactory', [])
       });
     };
 
+    var getTrip = function(trip_id) {
+      return $http({
+        method: 'GET',
+        url: '/trip/' + trip_id
+      }).then(function (res) {
+        return res.data;
+      }).catch(function(error) {
+        console.log(error);
+      });
+    };
+
     return {
       addTrip: addTrip,
-      getAllTrips: getAllTrips
+      getAllTrips: getAllTrips,
+      getTrip: getTrip
     };
   });
