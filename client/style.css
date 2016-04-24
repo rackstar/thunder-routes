@@ -127,12 +127,12 @@ a:hover {
   cursor: pointer;
 }
 
-.savedRoutes {
+.savedTrips {
   float: none;
   margin: 0 auto;
 }
 
-.saved-routes {
+.saved-trips {
   margin-bottom: 0;
   position: relative;
   top: 50%;
@@ -165,13 +165,13 @@ a:hover {
   margin: 0;
 }
 
-.route-start, 
-.route-end {
+.trip-start, 
+.trip-end {
   text-align: left;
   margin-bottom: 0
 }
 
-.saved-route-link {
+.saved-trip-link {
   float: right;
 }
 
