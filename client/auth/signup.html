@@ -16,13 +16,19 @@
 </header>
 <div>
   <h1>Sign up</h1>
-  <div role="alert" ng-show="loginError">{{ errorMessage }}</div>
   <form class="form-horizontal col-xs-offset-4 col-xs-4" name="signupForm" ng-submit="signup(signupForm.$valid)">
     <div class="form-group">
-      <input type="text" class="form-control initial-form" placeholder="username" ng-model="user.username" required />
-      <input type="password" class="form-control initial-form" placeholder="password" ng-model="user.password" required />
-      <input type="email" class="form-control initial-form" placeholder="email" ng-model="user.email" required />
-      <button class="btn btn-block">Sign Up</button>
+      <div class="alert-text" role="alert" ng-show="loginError">{{ errorMessage }}</div>
+      <input type="text" name="username" class="form-control initial-form" 
+        ng-class="{'invalid-form': signupForm.username.$invalid && signupForm.username.$touched}"
+        placeholder="username" ng-model="user.username" required />
+      <input type="email" name="email" class="form-control initial-form" 
+        ng-class="{'invalid-form': signupForm.email.$invalid && signupForm.email.$touched}" 
+        placeholder="email" ng-model="user.email" required />
+      <input type="password" name="password" class="form-control initial-form" 
+        ng-class="{'invalid-form': signupForm.password.$invalid && signupForm.password.$touched}"
+        placeholder="password" ng-model="user.password" required ng-minlength="6" ng-maxlength="30" />
+      <button class="btn btn-block" ng-disabled="signupForm.$invalid">Sign Up</button>
     </div>
   </form>
   <div class="col-xs-offset-4 col-xs-4">

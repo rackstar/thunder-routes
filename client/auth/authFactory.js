@@ -7,8 +7,8 @@ angular.module('roadtrippin.authFactory', [])
       url: '/signin',
       data: user
     })
-    .then(function(resp) {
-      return resp.data.token;
+    .then(function(res) {
+      return res.data.token;
     })
     .catch(function(error) {
       console.log('ERROR: ', error);
@@ -22,8 +22,8 @@ angular.module('roadtrippin.authFactory', [])
       url: '/signup',
       data: user
     })
-    .then(function(resp) {
-      return resp.data.token;
+    .then(function(res) {
+      return res.data.token;
     })
     .catch(function(error) {
       console.log('ERROR: ', error);
@@ -34,10 +34,15 @@ angular.module('roadtrippin.authFactory', [])
   var isAuth = function() {
     return !!$window.localStorage.getItem('com.roadtrippin');
   };
-  
+
+  var getCurrentUser = function() {
+    return $window.localStorage.getItem('profile');
+  };
+
   return {
     signin: signin,
     signup: signup,
-    isAuth: isAuth
+    isAuth: isAuth,
+    getCurrentUser: getCurrentUser
   };
 });

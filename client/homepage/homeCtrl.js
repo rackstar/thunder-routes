@@ -1,6 +1,6 @@
 angular.module('roadtrippin.home', [])
-  .controller('homeController', function($scope, $window, $state, $stateParams, mapFactory, tripFactory) {
-    $scope.savedRoutes = [];
+  .controller('homeController', function($scope, $window, $state, authFactory, mapFactory, tripFactory) {
+    $scope.savedTrips = [];
     $scope.input = {
       tripname: '',
       start: '',
@@ -9,7 +9,7 @@ angular.module('roadtrippin.home', [])
     };
     $scope.isTripsClosed = false;
     $scope.isCreateClosed = false;
-    $scope.username = $window.localStorage.getItem('username')
+    $scope.username = authFactory.getCurrentUser();
 
     mapFactory.locationAutoComplete('start', function(address) {
       $scope.input.start = address;
@@ -18,20 +18,20 @@ angular.module('roadtrippin.home', [])
       $scope.input.end = address;
     });
 
-    $scope.createTrip = function() {
+    $scope.addTrip = function() {
       var tripObject = {
         username: $scope.username,
         tripname: $scope.input.tripname,
         users: $scope.input.inviteFields,
       };
-      if($scope.input.start && $scope.input.end) {
+      if ($scope.input.start && $scope.input.end) {
         $window.localStorage.setItem('initialStart', $scope.input.start);
-        $window.localStorage.setItem('initialEnd', $scope.input.start);
+        $window.localStorage.setItem('initialEnd', $scope.input.end);
         $window.localStorage.setItem('initialStops', 5);
       }
       tripFactory.addTrip(tripObject)
         .then(function(trip) {
-          $state.go('trip', {id: trip.data._id});
+          $state.go('trip', {id: trip._id});
         });
     };
 
@@ -48,7 +48,14 @@ angular.module('roadtrippin.home', [])
     };
 
     $scope.getAllTrips = function() {
-      $scope.savedRoutes = tripFactory.getAllTrips($scope.username);
+      tripFactory.getAllTrips($scope.username)
+        .then(function(data) {
+          $scope.savedTrips = data;
+          console.log($scope.savedTrips);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     };
     $scope.getAllTrips();
   });

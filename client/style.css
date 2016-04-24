@@ -62,7 +62,7 @@ h1 {
   color: black;
 }
 
-.dropdown-menu>li>a:hover {
+.dropdown-menu li a:hover {
   color: #F2932E;
 }
 
@@ -89,7 +89,7 @@ form * {
   color: #333;
 }
 
-.btn:hover {
+.btn:hover:enabled {
   cursor: pointer;
   background-color: #F2932E;
 }
@@ -181,4 +181,18 @@ a:hover {
 
 .dont-show {
   visibility: hidden;
+}
+
+.invalid-form, .invalid-form:focus {
+  border-color: red;
+  box-shadow: 0 0 8px red;
+}
+
+.alert-text {
+  color: red;
+}
+
+.dropdown-username {
+  padding: 3px 20px;
+  font-weight: 900;
 }

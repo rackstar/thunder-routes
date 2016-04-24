@@ -1,4 +1,4 @@
-angular.module('roadtrippin.mapsFactory', [])
+angular.module('roadtrippin.mapFactory', [])
 
   .factory('mapFactory', function($http, $q, $window, $location) {
 
@@ -44,6 +44,7 @@ angular.module('roadtrippin.mapsFactory', [])
 
     var signout = function() {
       $window.localStorage.removeItem('com.roadtrippin');
+      $window.localStorage.removeItem('profile');
       $location.path('/signin');
     };
 
