@@ -1,5 +1,5 @@
 var Q = require('q');
-var Journey = require('./journeyModel.js');
+var Journey = require('./journeySchema.js');
 var Trip = require('../trip/tripModel.js');
 
 var findJourney = Q.nbind(Journey.findOne, Journey);

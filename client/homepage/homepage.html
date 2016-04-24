@@ -58,18 +58,20 @@
   <i class="fa fa-caret-right" ng-class="{'fa-rotate-90': !isTripsClosed}" aria-hidden="true"></i>
   <span>Saved Trips</span>
 </h3></a>
-<div class="col-xs-12 savedRoutes" ng-show="!isTripsClosed">
-  <div class="row info save-routes" ng-repeat="route in savedTrips">
+<div class="col-xs-12 savedTrips" ng-show="!isTripsClosed">
+  <div class="row info save-trips" ng-repeat="trip in savedTrips">
     <div class="col-xs-4">
-      <p class="route-start">From: {{ route.startPoint }}</p>
-      <p class="route-end">To: {{ route.endPoint }}</p>
+      <p class="trip-start">From: {{ trip.journeys[0].startPoint }}</p>
+      <p class="trip-end">To: {{ trip.journeys[0].endPoint }}</p>
     </div>
     <div class="col-xs-4">
-      <!-- <div class="stop-count">Number of stops: <br /> {{ route.wayPoints.length/2 }}</div> -->
-      <div class="stop-count">{{route.wayPoints.length/2}} stop<span ng-if="route.wayPoints.length > 2">s</span></div>
+      <div class="stop-count">{{trip.name}}</div>
+      <div class="stop-count">{{trip.users.length}} going</div>
     </div>
     <div class="col-xs-4 centered">
-      <button class="saved-route-link btn" ng-click="viewSavedRoute(route.hash)">View this Route</button>
+      <a ui-sref="trip({ tripId: trip._id })">
+        <button class="saved-trip-link btn">View this Trip</button>
+      </a>
     </div>
   </div>
 </div>

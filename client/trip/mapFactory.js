@@ -16,30 +16,26 @@ angular.module('roadtrippin.mapFactory', [])
 
     //send endpoints and array of waypoints to the server
     var saveJourneyWithWaypoints = function (tripObject) {
-      var deferred = $q.defer ();
-      $http({
+      return $http({
         method: 'POST',
         url: '/addJourney',
         data: JSON.stringify(tripObject)
       }).then(function (res) {
-        deferred.resolve (res);
+        return res;
       }).catch(function (err) {
-        deferred.reject (err);
+        console.log(err);
       });
-      return deferred.promise;
     };
 
     var getTrip = function(trip_id) {
-      var deferred = $q.defer();
-      $http({
+      return $http({
         method: 'GET',
         url: '/getTrip/' + trip_id
       }).then(function (res) {
-        deferred.resolve (res.data);
+        return res.data;
       }).catch(function (err) {
-        deferred.reject (err);
+        console.log(err);
       });
-      return deferred.promise;
     };
 
     var signout = function() {

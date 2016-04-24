@@ -21,7 +21,7 @@ module.exports = {
                 var token = jwt.encode(user, 'route66');
                 res.json({token: token});
               } else {
-                return next(new Error('No User'));
+                return next(new Error('Incorrect username/password'));
               }
             });
         }

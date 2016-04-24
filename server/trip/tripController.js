@@ -1,4 +1,4 @@
-var Trip = require('./tripModel.js')
+var Trip = require('./tripModel.js');
 var User = require('../users/userModel.js');
 var Q = require('q');
 
@@ -18,7 +18,7 @@ module.exports = {
         findTrips({_id: {$in: user.trips}})
           .then(function(trips) {
             res.status(200).json(trips);
-          })
+          });
       })
       .fail(function(error) {
         next(error);
@@ -26,35 +26,38 @@ module.exports = {
   },
 
   addTrip: function(req, res, next) {
-    console.log(req.body);
     var username = req.body.username;
     var tripname = req.body.tripname;
+    var users = req.body.users.filter(function(name) { return name.length; });
+    var journey = {
+      startPoint: req.body.start,
+      endPoint: req.body.end
+    };
     findUser({username: username})
       .then(function(user) {
-        var newTrip = new Trip({
+        var newTrip = {
           name: tripname,
-          creator: user._id
-        });
-        newTrip.save()
+          creator: user._id,
+          journeys: [journey]
+        };
+        Trip.create(newTrip)
           .then(function(trip) {
             trip.users.push(user._id);
             trip.save();
             user.trips.push(trip._id);
             user.save();
-            if(req.body.users.length > 0) {
-              findUsers({username: {$in: req.body.users}})
-                .then(function(friends) {
-                  friends.forEach(function(friend) {
-                    if(trip.users.indexOf(friend._id) < 0) {
-                      trip.users.push(friend._id);
-                      trip.save();
-                      friend.trips.push(trip._id);
-                      friend.save();
-                    }
-                  });
-                  res.status(201).json(trip);
+            findUsers({username: {$in: users}})
+              .then(function(friends) {
+                friends.forEach(function(friend) {
+                  if (trip.users.indexOf(friend._id) < 0) {
+                    trip.users.push(friend._id);
+                    friend.trips.push(trip._id);
+                    friend.save();
+                  }
                 });
-            }
+                trip.save();
+                res.status(201).json(trip);
+              });
           });
       })
       .catch(function (error) {
