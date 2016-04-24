@@ -20,17 +20,24 @@
   <span>Create a Trip</span>
 </h3></a>
 <!-- Form to create new trip -->
-<form class="form-inline" ng-show="!isCreateClosed">
+<form class="form-inline" name="tripForm" ng-show="!isCreateClosed" ng-submit="addTrip()">
   <div class="form-group">
     <div class="row">
-      <label for="tripname">Trip Name: </label>
-      <input id="tripname" type="text" class="form-control" autofocus placeholder="Trip name here" ng-model="input.tripname">
-      <label for="start">Start: </label>
-      <input id="start" type="text" class="form-control" autofocus placeholder="Start here" ng-model="input.start" />
-      <label for="end">Destination: </label>
-      <input id="end" type="text" class="form-control" placeholder="End here" ng-model="input.end" />
-      </select>
-      <button id="search-btn" class="btn btn-default" ng-click="createTrip()">Create Trip</button>
+      <label>Trip Name: </label>
+      <input name="tripname" type="text" class="form-control" autofocus 
+        ng-class="{'invalid-form': tripForm.tripname.$invalid && tripForm.tripname.$touched}"
+        placeholder="Start here" ng-model="input.tripname" required />
+    </div>
+    <div class="row">
+      <label>Start: </label>
+      <input name="start" id="start" type="text" class="form-control" autofocus 
+        ng-class="{'invalid-form': tripForm.start.$invalid && tripForm.start.$touched}"
+        placeholder="Start here" ng-model="input.start" required />
+      <label>Destination: </label>
+      <input name="end" id="end" type="text" class="form-control" 
+        ng-class="{'invalid-form': tripForm.end.$invalid && tripForm.end.$touched}"
+        placeholder="End here" ng-model="input.end" required />
+      <button class="btn btn-default" ng-disabled="tripForm.$invalid">Create Trip</button>
     </div>
     <div class="row">
       <div class="row" ng-repeat="field in input.inviteFields track by $index">
