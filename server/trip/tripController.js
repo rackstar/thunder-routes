@@ -40,6 +40,20 @@ module.exports = {
             trip.save();
             user.trips.push(trip._id);
             user.save();
+            if(req.body.users.length > 0) {
+              findUsers({username: {$in: req.body.users}})
+                .then(function(friends) {
+                  friends.forEach(function(friend) {
+                    if(trip.users.indexOf(friend._id) < 0) {
+                      trip.users.push(friend._id);
+                      trip.save();
+                      friend.trips.push(trip._id);
+                      friend.save();
+                    }
+                  });
+                  res.status(201).json(trip);
+                });
+            }
           });
       })
       .catch(function (error) {
@@ -69,6 +83,7 @@ module.exports = {
             trip.users.push(user._id);
             user.save();
             trip.save();
+            res.status(201).json(trip);
           });
       })
       .catch(function (error) {
