@@ -28,7 +28,7 @@ angular.module('roadtrippin.home', [])
       };
       tripFactory.addTrip(tripObject)
         .then(function(trip) {
-          $state.go('trip', {id: trip._id});
+          $state.go('trip', {tripId: trip._id});
         });
     };
 
