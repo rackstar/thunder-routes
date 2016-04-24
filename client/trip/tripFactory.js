@@ -1,12 +1,8 @@
 angular.module('roadtrippin.tripFactory', [])
 
   .factory('tripFactory', function($http, $q, $window, $location) {
-    var addTrip = function (user, name) {
+    var addTrip = function (tripObject) {
       var deferred = $q.defer ();
-      var tripObject = {
-        username: user,
-        tripname: name
-      };
       $http({
         method: 'POST',
         url: '/addTrip',
