@@ -22,13 +22,10 @@ angular.module('roadtrippin.home', [])
       var tripObject = {
         username: $scope.username,
         tripname: $scope.input.tripname,
+        start: $scope.input.start,
+        end: $scope.input.end,
         users: $scope.input.inviteFields,
       };
-      if ($scope.input.start && $scope.input.end) {
-        $window.localStorage.setItem('initialStart', $scope.input.start);
-        $window.localStorage.setItem('initialEnd', $scope.input.end);
-        $window.localStorage.setItem('initialStops', 5);
-      }
       tripFactory.addTrip(tripObject)
         .then(function(trip) {
           $state.go('trip', {id: trip._id});
