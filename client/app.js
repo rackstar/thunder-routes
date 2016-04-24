@@ -54,7 +54,7 @@ angular.module('roadtrippin', [
 })
 
 .run(function ($rootScope, $location, authFactory, $state) {
-  $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
+  $rootScope.$on('$locationChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
     if (toState && toState.authenticate && !authFactory.isAuth()) {
       $location.url('/signin');
     } else if (toState && toState.authenticate && authFactory.isAuth()) {

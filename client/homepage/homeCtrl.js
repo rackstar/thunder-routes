@@ -48,7 +48,14 @@ angular.module('roadtrippin.home', [])
     };
 
     $scope.getAllTrips = function() {
-      $scope.savedTrips = tripFactory.getAllTrips($scope.username);
+      tripFactory.getAllTrips($scope.username)
+        .then(function(data) {
+          $scope.savedTrips = data;
+          console.log($scope.savedTrips);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     };
     $scope.getAllTrips();
   });
