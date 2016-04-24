@@ -1,8 +1,9 @@
 angular.module('roadtrippin', [
-  'roadtrippin.home',
   'roadtrippin.maps',
   'roadtrippin.mapsFactory',
+  'roadtrippin.tripFactory',
   'gservice',
+  'roadtrippin.home',
   'roadtrippin.auth',
   'roadtrippin.authFactory',
   'ui.router'
@@ -29,7 +30,7 @@ angular.module('roadtrippin', [
       authenticate: true
     })
     .state('trip', {
-      url: '/trip/:tripID',
+      url: '/trip/:id',
       templateUrl: './trip/trip.html',
       controller: 'mapController',
       authenticate: true

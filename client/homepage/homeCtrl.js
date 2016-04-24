@@ -1,12 +1,15 @@
 angular.module('roadtrippin.home', [])
-  .controller('homeController', function($scope, mapFactory) {
+  .controller('homeController', function($scope, $window, $state, $stateParams, mapFactory, tripFactory) {
+    $scope.savedRoutes = [];
     $scope.input = {
+      tripname: '',
       start: '',
       end: '',
       inviteFields: ['']
     };
     $scope.isTripsClosed = false;
     $scope.isCreateClosed = false;
+    $scope.username = $window.localStorage.getItem('username')
 
     mapFactory.locationAutoComplete('start', function(address) {
       $scope.input.start = address;
@@ -16,7 +19,20 @@ angular.module('roadtrippin.home', [])
     });
 
     $scope.createTrip = function() {
-      console.log($scope.input);
+      var tripObject = {
+        username: $scope.username,
+        tripname: $scope.input.tripname,
+        users: $scope.input.inviteFields,
+      };
+      if($scope.input.start && $scope.input.end) {
+        $window.localStorage.setItem('initialStart', $scope.input.start);
+        $window.localStorage.setItem('initialEnd', $scope.input.start);
+        $window.localStorage.setItem('initialStops', 5);
+      }
+      tripFactory.addTrip(tripObject)
+        .then(function(trip) {
+          $state.go('trip', {id: trip.data._id});
+        });
     };
 
     $scope.addInviteField = function() {
@@ -30,4 +46,9 @@ angular.module('roadtrippin.home', [])
     $scope.signout = function () {
       mapFactory.signout();
     };
+
+    $scope.getAllTrips = function() {
+      $scope.savedRoutes = tripFactory.getAllTrips($scope.username);
+    };
+    $scope.getAllTrips();
   });

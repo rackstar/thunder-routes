@@ -7,6 +7,7 @@ var findTrips = Q.nbind(Trip.find, Trip);
 var createTrip = Q.nbind(Trip.create, Trip);
 
 var findUser = Q.nbind(User.findOne, User);
+var findUsers = Q.nbind(User.find, User);
 var createUser = Q.nbind(User.create, User);
 
 module.exports = {
@@ -25,6 +26,7 @@ module.exports = {
   },
 
   addTrip: function(req, res, next) {
+    console.log(req.body);
     var username = req.body.username;
     var tripname = req.body.tripname;
     findUser({username: username})
@@ -35,7 +37,6 @@ module.exports = {
         });
         newTrip.save()
           .then(function(trip) {
-            console.log(trip)
             trip.users.push(user._id);
             trip.save();
             user.trips.push(trip._id);
