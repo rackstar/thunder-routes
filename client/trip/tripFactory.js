@@ -1,31 +1,27 @@
 angular.module('roadtrippin.tripFactory', [])
 
   .factory('tripFactory', function($http, $q, $window, $location) {
-    var addTrip = function (tripObject) {
-      var deferred = $q.defer ();
-      $http({
+    var addTrip = function(tripObject) {
+      return $http({
         method: 'POST',
         url: '/addTrip',
-        data: JSON.stringify(tripObject)
+        data: tripObject
       }).then(function (res) {
-        deferred.resolve (res);
+        return res.data;
       }).catch(function (err) {
-        deferred.reject (err);
+        console.log(err);
       });
-      return deferred.promise;
     };
 
     var getAllTrips = function(user_id) {
-      var deferred = $q.defer();
-      $http({
+      return $http({
         method: 'GET',
         url: '/getAllTrips/' + user_id
       }).then(function (res) {
-        deferred.resolve (res.data);
-      }).catch(function (err) {
-        deferred.reject (err);
+        return res.data;
+      }).catch(function(error) {
+        console.log(error);
       });
-      return deferred.promise;
     };
 
     return {
