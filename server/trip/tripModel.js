@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var crypto = require('crypto');
 var Q = require('q');
-var Journey = require('../journey/journeyModel.js');
+var JourneySchema = require('../journey/journeySchema.js');
 var User = require('../users/userModel.js');
 var Schema = mongoose.Schema;
 
@@ -18,10 +18,7 @@ var TripSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   }],
-  journeys: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Journey'
-  }],
+  journeys: [JourneySchema],
   chat_id: { type: Schema.Types.ObjectId }
 },
 {
