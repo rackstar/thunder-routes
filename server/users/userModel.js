@@ -2,21 +2,28 @@ var Q = require('q');
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var SALT_WORK_FACTOR = 10;
-var Trips = require('../trip/tripModel.js');
+var Trip = require('../trip/tripModel.js');
+var Schema = mongoose.Schema;
 
-var UserSchema = new mongoose.Schema({
+var UserSchema = new Schema({
   username: {
     type: String,
     required: true,
     unique: true
   },
-  
   password: {
     type: String,
     required: true
   },
+  email: {
+    type: String,
+    required: true
+  },
   salt: String,
-  trips: [Trips]
+  trips: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Trip'
+  }]
 });
 
 UserSchema.methods.comparePasswords = function(attemptedPassword) {
@@ -58,6 +65,3 @@ UserSchema.pre('save', function(next) {
 });
 
 module.exports = mongoose.model('users', UserSchema);
-// var User = mongoose.model('User', UserSchema);
-
-// module.exports = User;

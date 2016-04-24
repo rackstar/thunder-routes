@@ -29,11 +29,11 @@ angular.module('roadtrippin.mapsFactory', [])
       return deferred.promise;
     };
 
-    var getAllRoutes = function() {
+    var getAllRoutes = function(user_id) {
       var deferred = $q.defer();
       $http({
         method: 'GET',
-        url: '/saveJourney'
+        url: '/getAllTrips/' + user_id
       }).then(function (res) {
         deferred.resolve (res.data);
       }).catch(function (err) {
