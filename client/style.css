@@ -62,7 +62,7 @@ h1 {
   color: black;
 }
 
-.dropdown-menu>li>a:hover {
+.dropdown-menu li a:hover {
   color: #F2932E;
 }
 
