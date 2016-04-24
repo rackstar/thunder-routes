@@ -30,7 +30,7 @@ angular.module('roadtrippin', [
       authenticate: true
     })
     .state('trip', {
-      url: '/trip/:tripID',
+      url: '/trip/:id',
       templateUrl: './trip/trip.html',
       controller: 'mapController',
       authenticate: true

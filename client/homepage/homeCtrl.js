@@ -1,5 +1,5 @@
 angular.module('roadtrippin.home', [])
-  .controller('homeController', function($scope, $window, mapFactory, tripFactory) {
+  .controller('homeController', function($scope, $window, $state, $stateParams, mapFactory, tripFactory) {
     $scope.savedRoutes = [];
     $scope.input = {
       tripname: '',
@@ -29,7 +29,10 @@ angular.module('roadtrippin.home', [])
         $window.localStorage.setItem('initialEnd', $scope.input.start);
         $window.localStorage.setItem('initialStops', 5);
       }
-      tripFactory.addTrip(tripObject);
+      tripFactory.addTrip(tripObject)
+        .then(function(trip) {
+          $state.go('trip', {id: trip.data._id});
+        });
     };
 
     $scope.addInviteField = function() {
