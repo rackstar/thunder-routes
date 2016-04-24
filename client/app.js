@@ -30,7 +30,7 @@ angular.module('roadtrippin', [
       authenticate: true
     })
     .state('trip', {
-      url: '/trip/:id',
+      url: '/trip/:tripId',
       templateUrl: './trip/trip.html',
       controller: 'mapController',
       authenticate: true
@@ -54,11 +54,9 @@ angular.module('roadtrippin', [
 })
 
 .run(function ($rootScope, $location, authFactory, $state) {
-  $rootScope.$on('$locationChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
+  $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
     if (toState && toState.authenticate && !authFactory.isAuth()) {
       $location.url('/signin');
-    } else if (toState && toState.authenticate && authFactory.isAuth()) {
-      $location.url('/homepage');
     }
   });
 });
