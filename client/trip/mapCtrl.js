@@ -1,5 +1,6 @@
-angular.module('roadtrippin.maps', ['gservice'])
-  .controller('mapController', function($scope, mapFactory, gservice, $location, $anchorScroll) {
+angular.module('roadtrippin.maps', [])
+  .controller('mapController', function($scope, mapFactory, authFactory, gservice, $location, $anchorScroll) {
+    $scope.username = authFactory.getCurrentUser();
     $scope.route = {};
     $scope.route.stopOptions = [1, 2, 3, 4, 5];
     $scope.places = [];
@@ -46,9 +47,9 @@ angular.module('roadtrippin.maps', ['gservice'])
     };
 
     $scope.getAll = function () {
-      mapFactory.getAllRoutes().then(function (results) {
-        $scope.savedRoutes = results;
-      });
+      // mapFactory.getAllRoutes().then(function (results) {
+      //   $scope.savedRoutes = results;
+      // });
     };
 
     $scope.viewSavedRoute = function (hash) {

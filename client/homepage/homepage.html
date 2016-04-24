@@ -7,7 +7,7 @@
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <li><p class="dropdown-username">{{user.username}}</p></li>
+      <li><p class="dropdown-username">{{username}}</p></li>
       <li><a ui-sref="homepage">Home</a></li>
       <li><a href="#" id="signout" ng-click="signout()">Sign Out</a></li>
     </ul>
@@ -59,7 +59,7 @@
   <span>Saved Trips</span>
 </h3></a>
 <div class="col-xs-12 savedRoutes" ng-show="!isTripsClosed">
-  <div class="row info save-routes" ng-repeat="route in savedRoutes">
+  <div class="row info save-routes" ng-repeat="route in savedTrips">
     <div class="col-xs-4">
       <p class="route-start">From: {{ route.startPoint }}</p>
       <p class="route-end">To: {{ route.endPoint }}</p>

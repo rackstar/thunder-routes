@@ -1,6 +1,6 @@
 angular.module('roadtrippin', [
   'roadtrippin.maps',
-  'roadtrippin.mapsFactory',
+  'roadtrippin.mapFactory',
   'roadtrippin.tripFactory',
   'gservice',
   'roadtrippin.home',

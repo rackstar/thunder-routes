@@ -1,5 +1,5 @@
 angular.module('roadtrippin.home', [])
-  .controller('homeController', function($scope, $window, $state, $stateParams, mapFactory, tripFactory) {
+  .controller('homeController', function($scope, $window, $state, authFactory, mapFactory, tripFactory) {
     $scope.savedTrips = [];
     $scope.input = {
       tripname: '',
@@ -26,7 +26,7 @@ angular.module('roadtrippin.home', [])
       };
       if ($scope.input.start && $scope.input.end) {
         $window.localStorage.setItem('initialStart', $scope.input.start);
-        $window.localStorage.setItem('initialEnd', $scope.input.start);
+        $window.localStorage.setItem('initialEnd', $scope.input.end);
         $window.localStorage.setItem('initialStops', 5);
       }
       tripFactory.addTrip(tripObject)
