@@ -7,11 +7,11 @@ app.factory('socket', function() {
 
 app.factory('chatFact', function($http) {
   return {
-    getChat: function(trip_id) {
+    getChat: function(tripId) {
       return $http({
           method: 'POST',
           url: '/chat',
-          data: { trip_id: "571acec0cb131271a6f8cd07"/*trip_id*/ }
+          data: { trip_id: tripId }
         })
         .then(function(res) {
           return res.data;
@@ -50,13 +50,14 @@ app.directive('a', function() {
    };
 });
 
-app.controller('chatController', function($scope, socket, chatFact) {
+app.controller('chatController', function($scope, $stateParams, socket, chatFact, authFactory) {
     $scope.messages = [];
+    $scope.username = authFactory.getCurrentUser();
 
     $scope.sendMsg  = function($event) {
       $scope.data = {
-        trip_id: trip_id
-        username: 'rocky',
+        trip_id: $stateParams.tripId,
+        username: $scope.username,
         message: $scope.data.message
       };
       socket.emit('new message', $scope.data);
@@ -70,8 +71,8 @@ app.controller('chatController', function($scope, socket, chatFact) {
       $scope.$digest();
     });
 
-    $scope.getChat = function(trip_id) {
-        chatFact.getChat(trip_id)            
+    $scope.getChat = function(tripId) {
+        chatFact.getChat($stateParams.tripId)      
           .then(function(messages) {
             $scope.messages = messages;
             console.log($scope.messages)
