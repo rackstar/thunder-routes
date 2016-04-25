@@ -48,7 +48,7 @@
   <div class="col-xs-4 info-content pre-scrollable">
     <div class="row">
         <div class="info stop-info" ng-repeat="place in places | orderBy:'position'">
-          <p class="stop-name">{{getLetter(place.position)}}. <a ng-href="{{place.url}}">{{place.name}}</a>
+          <p class="stop-name">{{getLetter(place.position)}}. <a ng-href="{{place.url}}" target="_blank">{{place.name}}</a>
           </p>
           <img class="rating" ng-src="{{place.rating}}" />
           <p class="stop-address">{{place.location[0]}}</p>
