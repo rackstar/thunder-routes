@@ -1,11 +1,11 @@
-var app = angular.module('chat', []);
+var app = angular.module('roadtrippin.chatFactory', []);
 
 app.factory('socket', function() {
     var socket = io.connect();
     return socket;
 });
 
-app.factory('chatFact', function($http) {
+app.factory('chatFactory', function($http) {
   return {
     getChat: function(tripId) {
       return $http({
@@ -18,8 +18,7 @@ app.factory('chatFact', function($http) {
         });
     }
   };
-});
-
+})
 
 app.directive('scrollBottom', function () {
   return {
@@ -48,34 +47,4 @@ app.directive('a', function() {
             }
         }
    };
-});
-
-app.controller('chatController', function($scope, $stateParams, socket, chatFact, authFactory) {
-    $scope.messages = [];
-    $scope.username = authFactory.getCurrentUser();
-
-    $scope.sendMsg  = function($event) {
-      $scope.data = {
-        trip_id: $stateParams.tripId,
-        username: $scope.username,
-        message: $scope.data.message
-      };
-      socket.emit('new message', $scope.data);
-      $scope.data.message = '';
-      $event.preventDefault();
-    };
-
-    socket.on('message saved', function(msg) {
-      // msg.time = moment().fromNow()
-      $scope.messages.push(msg);
-      $scope.$digest();
-    });
-
-    $scope.getChat = function(tripId) {
-        chatFact.getChat($stateParams.tripId)      
-          .then(function(messages) {
-            $scope.messages = messages;
-            console.log($scope.messages)
-          });
-    };
 });
