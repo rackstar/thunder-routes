@@ -70,7 +70,6 @@ angular.module('roadtrippin.maps', [])
       }
       // if its an email send mail
       if (tripFactory.validateEmail(user)) {
-        console.log(user, 'inside validate email');
         var data = {
           email: user,
           tripId: $stateParams.tripId
