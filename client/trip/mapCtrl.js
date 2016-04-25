@@ -12,6 +12,8 @@ angular.module('roadtrippin.maps', [])
     $scope.isChatClosed = true;
     $scope.isStopsClosed = false;
     $scope.isUsersClosed = false;
+    $scope.hotels;
+    $scope.attractions;
 
     mapFactory.locationAutoComplete('start', function(address) {
       $scope.input.start = address;
@@ -93,6 +95,17 @@ angular.module('roadtrippin.maps', [])
       $scope.route.gas = $scope.route.gas || document.getElementById('gas').value;
       gservice.calcRoute($scope.route.start, $scope.route.end, $scope.route.numStops, $scope.route.gas)
         .then(function(places) { splitLocations(places); });
+      // get yelp hotels
+      tripFactory.hotels($scope.route.end)
+        .then(function(hotels) {
+          $scope.hotels = hotels;
+        });
+      // get yelp attractions
+      tripFactory.attractions($scope.route.end)
+        .then(function(attractions) {
+          $scope.attractions = attractions;
+        });
+
       $scope.route.start = null;
       $scope.route.end = null;
       $scope.route.gas = null;
