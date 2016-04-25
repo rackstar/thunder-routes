@@ -120,7 +120,7 @@ angular.module('roadtrippin.maps', [])
     });
 
     $scope.getChat = function(tripId) {
-      chatFact.getChat($stateParams.tripId)
+      chatFactory.getChat($stateParams.tripId)
         .then(function(messages) {
           $scope.messages = messages;
           console.log($scope.messages)

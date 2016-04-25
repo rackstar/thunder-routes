@@ -32,8 +32,8 @@ app.post('/addTrip', tripController.addTrip);
 app.get('/trip/:tripId', tripController.getTrip);
 app.get('/getAllTrips/:username', tripController.getAllTrips);
 
-app.post('/saveJourney', journeyController.saveJourney);
-app.get('/saveJourney', journeyController.getAll);
+// app.post('/saveJourney', journeyController.saveJourney);
+// app.get('/saveJourney', journeyController.getAll);
 
 app.post('/signin', userController.signin);
 app.post('/signup', userController.signup);
