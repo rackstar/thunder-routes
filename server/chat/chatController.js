@@ -5,7 +5,7 @@ module.exports = {
     var trip_id = req.body.trip_id;
     console.log(trip_id, 'id');
     Chat.find({ trip_id: trip_id })
-      .then(function(err, messages) {
+      .exec(function(err, messages) {
         if (err) {
           next(new Error(err));
         }
