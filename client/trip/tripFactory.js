@@ -59,11 +59,31 @@ angular.module('roadtrippin.tripFactory', [])
       });
     };
 
+    var email = function(data) {
+      data.link = 'http://thunder-routes.herokuapp.com/#/trip/' + data.tripId;
+      return $http({
+        method: 'POST',
+        url: '/email',
+        data: data
+      }).then(function(res) {
+        return res.data;
+      }).catch(function(err) {
+        console.log(err);
+      });
+    };
+
+    var validateEmail = function(email) {
+      var re = /\S+@\S+\.\S+/;
+      return re.test(email);
+    };
+
     return {
       addTrip: addTrip,
       updateTrip: updateTrip,
       getAllTrips: getAllTrips,
       getTrip: getTrip,
-      yelp: yelp
+      yelp: yelp,
+      email: email,
+      validateEmail: validateEmail
     };
   });

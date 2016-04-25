@@ -68,6 +68,18 @@ angular.module('roadtrippin.maps', [])
       if ($scope.input.users.indexOf(user) < 0) {
         $scope.input.users.push(user);
       }
+      // if its an email send mail
+      if (tripFactory.validateEmail(user)) {
+        var data = {
+          email: user,
+          tripId: $stateParams.tripId
+        };
+
+        tripFactory.email(data)
+          .then(function(res) {
+            console.log(res);
+          });
+      }
     };
 
     //this is a call to our Google maps API factory for directions

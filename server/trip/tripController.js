@@ -1,5 +1,7 @@
 var Trip = require('./tripModel.js');
 var User = require('../users/userModel.js');
+var mailer = require('nodemailer');
+var Yelp = require('yelp');
 var Q = require('q');
 
 var findTrip = Q.nbind(Trip.findOne, Trip);
@@ -10,14 +12,25 @@ var findUser = Q.nbind(User.findOne, User);
 var findUsers = Q.nbind(User.find, User);
 var createUser = Q.nbind(User.create, User);
 
-var Yelp = require('yelp');
-
 var yelp = new Yelp({
   consumer_key: '5SlmhNd4EGrhInttbfX7uw',
   consumer_secret: 'nVRghOPAKVMOXri27Qgzu5N9e5E',
   token: 'wKAFie0VOM520oqk9xA6DNHrKDS4B-8p',
   token_secret: '5O16qo8TG3z7jjfkTMOJYDLWDwY',
 });
+
+var transporter = mailer.createTransport({
+  service: 'Gmail',
+  auth: {
+      user: 'hrr14hera@gmail.com',
+      pass: 'temppass123'
+  }
+});
+
+var mailOptions = {
+    from: 'hrr14hera@gmail.com', // sender address
+    subject: 'You have been invited to go roadtrippin!', // Subject line
+};
 
 module.exports = {
   getAllTrips: function (req, res, next) {
@@ -166,5 +179,22 @@ module.exports = {
       .catch(function (err) {
         console.error(err);
       });
+  },
+
+  email: function(req, res) {
+    mailOptions.to = req.body.email;
+    mailOptions.html = '<h3><b>Collaborate and plan your trip with Thunder-Routes</b></h3>' +
+                       '<h4>You can join your friends here:</h4>' +
+                       req.body.link +
+                       '<p>Happy RoadTrippin!</p>'
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            console.log(error);
+            res.json({yo: 'error'});
+        }else{
+            console.log('Message sent: ' + info.response);
+            res.json({yo: info.response});
+        };
+    });
   }
 };

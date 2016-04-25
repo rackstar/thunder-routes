@@ -41,7 +41,9 @@ app.post('/signup', userController.signup);
 app.use(userController.errorHandler);
 
 app.post('/chat', chatController.getChat);
-app.post('/yelp', tripController.yelp)
+app.post('/yelp', tripController.yelp);
+app.post('/email', tripController.email);
+
 // SOCKET.IO
 io.on('connection', function(socket){
   console.log('a user connected');
