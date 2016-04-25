@@ -30,6 +30,9 @@
           placeholder="Enter end point" ng-model="input.end" />
         <select class="form-control selectpicker" ng-model ="route.numStops" ng-options="n for n in route.stopOptions">
         </select>
+        <label for="gas">Miles Between Gas Stops: </label>
+        <input id="gas" type="text" class="form-control"
+          placeholder="Enter number of miles..." ng-model="input.gas" />
         <button id="search-btn" class="btn btn-default" ng-click="getRoute()">Get Stops
         </button>
       </div>
