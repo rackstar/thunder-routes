@@ -116,7 +116,7 @@ angular.module('gservice', [])
         var points = [];
         var stopDistance;
         if (distance) {
-          numStops = Math.ceil(waypointArray.length / distance);
+          numStops = Math.floor(waypointArray.length / distance);
         }
         stopDistance = Math.floor(waypointArray.length / (numStops + 1));
         for (i = 0; i < numStops; i++) {
