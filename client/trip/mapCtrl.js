@@ -81,6 +81,11 @@ angular.module('roadtrippin.maps', [])
       $scope.route.end = null;
     };
 
+    $scope.yelp = function(dataQuery, obj) {
+      var yelpData = tripFactory.yelp(dataQuery);
+      return yelpData;
+    };
+
     var splitLocations = function (places) {
       $scope.places = [];
       //copy the places array before we start splitting things so our original stays in-tact
@@ -90,8 +95,16 @@ angular.module('roadtrippin.maps', [])
         placesCopy.push(JSON.parse(JSON.stringify(places[i])));
       }
       placesCopy.forEach(function (place) { //split address for easier formatting
-        place.location = place.location.split(', ');
-        $scope.places.push(place);
+        $scope.yelp(place)
+          .then(function(yelpData) {
+            place.phone = yelpData.phone;
+            place.rating = yelpData.rating;
+            place.url = yelpData.url;
+            place.image = yelpData.image;
+            console.log(yelpData.image, 'image link');
+            place.location = place.location.split(', ');
+            $scope.places.push(place);
+          });
       });
       console.log(gservice.thisJourney);
     };

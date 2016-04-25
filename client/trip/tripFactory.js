@@ -6,9 +6,9 @@ angular.module('roadtrippin.tripFactory', [])
         method: 'POST',
         url: '/addTrip',
         data: tripObject
-      }).then(function (res) {
+      }).then(function(res) {
         return res.data;
-      }).catch(function (err) {
+      }).catch(function(err) {
         console.log(err);
       });
     };
@@ -29,7 +29,7 @@ angular.module('roadtrippin.tripFactory', [])
       return $http({
         method: 'GET',
         url: '/getAllTrips/' + user_id
-      }).then(function (res) {
+      }).then(function(res) {
         return res.data;
       }).catch(function(error) {
         console.log(error);
@@ -40,10 +40,22 @@ angular.module('roadtrippin.tripFactory', [])
       return $http({
         method: 'GET',
         url: '/trip/' + trip_id
-      }).then(function (res) {
+      }).then(function(res) {
         return res.data;
       }).catch(function(error) {
         console.log(error);
+      });
+    };
+
+    var yelp = function(data) {
+      return $http({
+        method: 'POST',
+        url: '/yelp',
+        data: data
+      }).then(function(res) {
+        return res.data;
+      }).catch(function(err) {
+        console.log(err);
       });
     };
 
@@ -51,6 +63,7 @@ angular.module('roadtrippin.tripFactory', [])
       addTrip: addTrip,
       updateTrip: updateTrip,
       getAllTrips: getAllTrips,
-      getTrip: getTrip
+      getTrip: getTrip,
+      yelp: yelp
     };
   });

@@ -10,6 +10,15 @@ var findUser = Q.nbind(User.findOne, User);
 var findUsers = Q.nbind(User.find, User);
 var createUser = Q.nbind(User.create, User);
 
+var Yelp = require('yelp');
+
+var yelp = new Yelp({
+  consumer_key: '5SlmhNd4EGrhInttbfX7uw',
+  consumer_secret: 'nVRghOPAKVMOXri27Qgzu5N9e5E',
+  token: 'wKAFie0VOM520oqk9xA6DNHrKDS4B-8p',
+  token_secret: '5O16qo8TG3z7jjfkTMOJYDLWDwY',
+});
+
 module.exports = {
   getAllTrips: function (req, res, next) {
     var username = req.params.username;
@@ -131,6 +140,31 @@ module.exports = {
       })
       .catch(function (error) {
         next(error);
+      });
+  },
+
+  yelp: function(req, res) {
+    var query = {
+      term: req.body.name,
+      location: req.body.location,
+      limit: 1
+    }
+
+    yelp.search(query)
+      .then(function (data) {
+        if (data) {
+          var business = data.businesses[0];
+          var yelpData = {
+            rating: business.rating_img_url,
+            url: business.url,
+            phone: business.display_phone,
+            image: business.image_url
+          };
+          res.status(200).json(yelpData);
+        }
+      })
+      .catch(function (err) {
+        console.error(err);
       });
   }
 };
