@@ -61,7 +61,57 @@ module.exports = {
           });
       })
       .catch(function (error) {
-          next(error);
+        next(error);
+      });
+  },
+
+  updateTrip: function(req, res, next) {
+    var tripId = req.body.tripId;
+    var newTripname = req.body.tripname;
+    var newJourney = req.body.journey;
+    var newUsernames = req.body.users;
+
+    findTrip({_id: tripId})
+      .then(function(trip) {
+        findUsers({username: {$in: newUsernames}})
+          .then(function(newUsers) {
+            // Stringify ids for comparison to work properly
+            var newUserIds = newUsers.map(function(user) { return user._id; });
+            var newUserIdStrings = newUsers.map(function(user) { return JSON.stringify(user._id); });
+            var removedIds = trip.users.filter(function(userId) {
+              return newUserIdStrings.indexOf(JSON.stringify(userId)) < 0;
+            });
+
+            // Update trips list on removed users
+            findUsers({_id: {$in: removedIds}})
+              .then(function(removedUsers) {
+                removedUsers.forEach(function(user) {
+                  var tripIndex = user.trips.indexOf(trip._id);
+                  console.log(tripIndex);
+                  if (tripIndex > -1) {
+                    user.trips.splice(tripIndeax, 1);
+                    user.save();
+                  }
+                });
+              });
+
+            trip.name = newTripname;
+            trip.journeys = [newJourney];
+            trip.users = newUserIds;
+            trip.save();
+
+            // Update trips list for added users
+            newUsers.forEach(function(user) {
+              if (user.trips.indexOf(trip._id) < 0) {
+                user.trips.push(trip._id);
+                user.save();
+              }
+            });
+            res.status(201).json(trip);
+          });
+      })
+      .catch(function (error) {
+        next(error);
       });
   },
 
@@ -69,25 +119,14 @@ module.exports = {
     var tripId = req.params.tripId;
     findTrip({_id: tripId})
       .then(function(trip) {
-        res.status(200).json(trip);
-      })
-      .catch(function (error) {
-        next(error);
-      });
-  },
-
-  addUser: function(req, res, next) {
-    var username = req.body.username;
-    var tripId = req.body.trip_id;
-    findUser({username: username})
-      .then(function(user) {
-        findTrip({_id: tripId})
-          .then(function(trip) {
-            user.trips.push(tripId);
-            trip.users.push(user._id);
-            user.save();
-            trip.save();
-            res.status(201).json(trip);
+        findUsers({_id: {$in: trip.users}})
+          .then(function(users) {
+            var usernames = users.map(function(user) { return user.username; });
+            var tripObject = {
+              body: trip,
+              usernames: usernames
+            };
+            res.status(200).json(tripObject);
           });
       })
       .catch(function (error) {
