@@ -40,7 +40,7 @@ angular.module('gservice', [])
       // --------------------------------------------------------------
 
       //calculate a route (promisified function)
-      googleMapService.calcRoute = function (start, end, numStops) {
+      googleMapService.calcRoute = function (start, end, numStops, distance) {
         var deferred = $q.defer();
         var request = {
           origin: start,
@@ -54,12 +54,19 @@ angular.module('gservice', [])
             var officialEnd = result.routes[0].legs[0].end_address;
             //format and send request for the same trip but with waypoints
             var stops = [];
-            var waypoints = getWaypoints(result.routes[0].overview_path, numStops);
-            var promise = getNearbyThings(waypoints); //testing testing
-            promise.then(function (placePoints) {
-              googleMapService.render(officialStart, officialEnd, placePoints)
-              .then(function () {
-                deferred.resolve(googleMapService.thisJourney.waypoints);
+            var restWaypoints = getWaypoints(result.routes[0].overview_path, numStops);
+            if (distance) {
+              var gasWaypoints = getWaypoints(result.routes[0].overview_path, numStops, distance);
+            }
+            var restPromise = getNearbyThings(restWaypoints); //testing testing
+            var gasPromise = getNearbyThings(gasWaypoints, null, 'gas');
+            restPromise.then(function (restPoints) {
+              gasPromise.then(function(gasPoints) {
+                var placePoints = restPoints.concat(gasPoints);
+                googleMapService.render(officialStart, officialEnd, placePoints)
+                .then(function () {
+                  deferred.resolve(googleMapService.thisJourney.waypoints);
+                });
               });
             });
           }
@@ -68,7 +75,7 @@ angular.module('gservice', [])
       };
 
       //render a complete journey (promisified function)
-      googleMapService.render = function (start, end, waypoints) {
+      googleMapService.render = function (start, end, waypoints, type) {
         var deferred = $q.defer();
         //make route points accessable to other functions
         googleMapService.thisJourney.start = start;
@@ -104,9 +111,14 @@ angular.module('gservice', [])
       // --------------------------------------------------------------
 
       // get waypoints by breaking up trip into even-ish segments
-      var getWaypoints = function (waypointArray, numStops) {
+      // Distance used for gas stops
+      var getWaypoints = function (waypointArray, numStops, distance) {
         var points = [];
-        var stopDistance = Math.floor(waypointArray.length / (numStops + 1));
+        var stopDistance;
+        if (distance) {
+          numStops = Math.ceil(waypointArray.length / distance);
+        }
+        stopDistance = Math.floor(waypointArray.length / (numStops + 1));
         for (i = 0; i < numStops; i++) {
           points.push(stopDistance + (stopDistance * i));
         }
