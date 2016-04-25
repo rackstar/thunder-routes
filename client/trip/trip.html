@@ -16,24 +16,26 @@
 </header>
 
 <!-- Search form -->
-<form class="form-inline">
-  <div class="form-group">
-    <div class="col-xs-12">
-      <label for="start">Trip Name: </label>
-      <input id="tripname" type="text" class="form-control" ng-model="input.tripname" />
-      <label for="start">Start: </label>
-      <input id="start" type="text" class="form-control" 
-        placeholder="Enter start point" ng-model="input.start" />
-      <label for="end">Destination: </label>
-      <input id="end" type="text" class="form-control" 
-        placeholder="Enter end point" ng-model="input.end" />
-      <select class="form-control selectpicker" ng-model ="route.numStops" ng-options="n for n in route.stopOptions">
-      </select>
-      <button id="search-btn" class="btn btn-default" ng-click="getRoute()">Get Stops
-      </button>
+<div class="row">
+  <form class="form-inline">
+    <div class="form-group">
+      <div class="col-xs-12">
+        <label for="start">Trip Name: </label>
+        <input id="tripname" type="text" class="form-control" ng-model="input.tripname" />
+        <label for="start">Start: </label>
+        <input id="start" type="text" class="form-control" 
+          placeholder="Enter start point" ng-model="input.start" />
+        <label for="end">Destination: </label>
+        <input id="end" type="text" class="form-control" 
+          placeholder="Enter end point" ng-model="input.end" />
+        <select class="form-control selectpicker" ng-model ="route.numStops" ng-options="n for n in route.stopOptions">
+        </select>
+        <button id="search-btn" class="btn btn-default" ng-click="getRoute()">Get Stops
+        </button>
+      </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>
 
 <!-- Container for map and stops -->
 <div class="row">
@@ -50,24 +52,23 @@
       <p class="stop-address">{{place.location[1]}}, {{place.location[2]}}</p>
       <p class="stop-address">{{place.location[3]}}</p>
     </div>
-    <button class="routeBtn btn btn-block" ng-click="saveRoute()">Save this route</button>
   </div>
 </div>
 
-<!-- Saved routes -->
-<div class="col-xs-12 savedRoutes">
-  <h3 class="infoHeader"><i class="fa fa-caret-right fa-rotate-90" aria-hidden="true"></i>Saved Routes</h3>
-  <div class="row info save-routes" ng-repeat="route in savedRoutes">
-    <div class="col-xs-4">
-      <p class="route-start">From: {{ route.startPoint }}</p>
-      <p class="route-end">To: {{ route.endPoint }}</p>
+<div class="row">
+  <div class="col-xs-12">
+    <label>{{input.users.length}} going: </label>
+    <div class="row" ng-repeat="user in input.users track by $index">
+      <div class="col-xs-3">{{user}}</div>
+      <button class="btn btn-default" ng-click="removeUser($index)">Remove</button>
     </div>
-    <div class="col-xs-4">
-      <!-- <div class="stop-count">Number of stops: <br /> {{ route.wayPoints.length/2 }}</div> -->
-      <div class="stop-count">{{route.wayPoints.length/2}} stop<span ng-if="route.wayPoints.length > 2">s</span></div>
-    </div>
-    <div class="col-xs-4 centered">
-      <button class="saved-route-link btn" ng-click="viewSavedRoute(route.hash)">View this Route</button>
+    <div class="row">
+      <form class="form-inline" name="addUserForm" 
+        ng-submit="addUser(input.userInput); input.userInput = '';">
+        <input type="text" class="form-control" placeholder="Invite friend" 
+          ng-model="input.userInput" required />
+        <button class="btn btn-default" ng-disabled="addUserForm.$invalid">Add</button>
+      </form>
     </div>
   </div>
 </div>
@@ -123,5 +124,11 @@
       </div>
     </div>
   </div>
+
+<div class="row">
+  <button class="btn btn-default" 
+    ng-click="updateTrip()">Save Changes</button>
+</div>
+
 <!-- Very important invisible div for places search -->
 <div id="invisible"></div>

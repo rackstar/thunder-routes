@@ -48,7 +48,6 @@ angular.module('roadtrippin.home', [])
       tripFactory.getAllTrips($scope.username)
         .then(function(data) {
           $scope.savedTrips = data;
-          console.log($scope.savedTrips);
         })
         .catch(function(error) {
           console.log(error);

@@ -29,6 +29,7 @@ db.once('open', function() {
 // ROUTES
 app.post('/addJourney', journeyController.addJourney);
 app.post('/addTrip', tripController.addTrip);
+app.post('/updateTrip', tripController.updateTrip);
 app.get('/trip/:tripId', tripController.getTrip);
 app.get('/getAllTrips/:username', tripController.getAllTrips);
 

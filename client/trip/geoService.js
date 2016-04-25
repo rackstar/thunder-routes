@@ -12,7 +12,7 @@ angular.module('gservice', [])
 
       //Store current trip data so we can access it for saving.
       //Properties will be added to this object every time a route is calculated.
-      googleMapService.thisTrip = {};
+      googleMapService.thisJourney = {};
 
       //initialize the map if no other instructions are given
       var initialize = function () {
@@ -59,7 +59,7 @@ angular.module('gservice', [])
             promise.then(function (placePoints) {
               googleMapService.render(officialStart, officialEnd, placePoints)
               .then(function () {
-                deferred.resolve(googleMapService.thisTrip.waypoints);
+                deferred.resolve(googleMapService.thisJourney.waypoints);
               });
             });
           }
@@ -71,9 +71,9 @@ angular.module('gservice', [])
       googleMapService.render = function (start, end, waypoints) {
         var deferred = $q.defer();
         //make route points accessable to other functions
-        googleMapService.thisTrip.start = start;
-        googleMapService.thisTrip.end = end;
-        googleMapService.thisTrip.waypoints = waypoints;
+        googleMapService.thisJourney.start = start;
+        googleMapService.thisJourney.end = end;
+        googleMapService.thisJourney.waypoints = waypoints;
         var stops = []; //format stops for Google request
         waypoints.forEach(function (w) {
           stops.push({
@@ -156,7 +156,7 @@ angular.module('gservice', [])
           } else { //if Google doesn't send an OK status
             deferred.reject('we had a problem');
           }
-        };
+        }
 
         return deferred.promise;
       };
@@ -164,8 +164,8 @@ angular.module('gservice', [])
       //Record order in 'position' property of each waypoint
       var sortWaypoints = function (waypointOrder) {
         for (var i = 0; i < waypointOrder.length; i++) {
-          var index = waypointOrder[i]
-          var waypoint = googleMapService.thisTrip.waypoints[index];
+          var index = waypointOrder[i];
+          var waypoint = googleMapService.thisJourney.waypoints[index];
           waypoint.position = i;
         }
         return;
