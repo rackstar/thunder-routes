@@ -13,6 +13,18 @@ angular.module('roadtrippin.tripFactory', [])
       });
     };
 
+    var updateTrip = function(tripObject) {
+      return $http({
+        method: 'POST',
+        url: '/updateTrip',
+        data: tripObject
+      }).then(function (res) {
+        return res.data;
+      }).catch(function (err) {
+        console.log(err);
+      });
+    };
+
     var getAllTrips = function(user_id) {
       return $http({
         method: 'GET',
@@ -37,6 +49,7 @@ angular.module('roadtrippin.tripFactory', [])
 
     return {
       addTrip: addTrip,
+      updateTrip: updateTrip,
       getAllTrips: getAllTrips,
       getTrip: getTrip
     };
