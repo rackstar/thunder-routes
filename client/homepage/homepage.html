@@ -1,7 +1,8 @@
 <!-- Header -->
 <header class="col-xs-12" id="funcNav">
-  <a id="#top"></a>
-  <div class="dropdown col-xs-offset-10 col-xs-2">
+  <a id="top"></a>
+  <h1 class="title col-xs-offset-2 col-xs-8">Thunder Routes</h1>
+  <div class="dropdown col-xs-2">
     <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <span class="acct">Account</span>
       <span class="caret"></span>
@@ -12,11 +13,10 @@
       <li><a href="#" id="signout" ng-click="signout()">Sign Out</a></li>
     </ul>
   </div>
-  <h1 class="title col-xs-10">Thunder Routes</h1>
 </header>
 
 <a class="infoHeader" ng-click="isCreateClosed = !isCreateClosed"><h3>
-  <i class="fa fa-caret-right" ng-class="{'fa-rotate-90': !isCreateClosed}" aria-hidden="true"></i>
+  <i class="fa fa-caret-right" ng-class="{'fa-rotate-90': !isCreateClosed}" aria-hidden="false"></i>
   <span>Create a Trip</span>
 </h3></a>
 <!-- Form to create new trip -->
@@ -60,7 +60,7 @@
 
 <!-- Saved trips -->
 <a class="infoHeader" ng-click="isTripsClosed = !isTripsClosed"><h3>
-  <i class="fa fa-caret-right" ng-class="{'fa-rotate-90': !isTripsClosed}" aria-hidden="true"></i>
+  <i class="fa fa-caret-right" ng-class="{'fa-rotate-90': !isTripsClosed}" aria-hidden="false"></i>
   <span>Saved Trips</span>
 </h3></a>
 <div class="col-xs-12 savedTrips" ng-show="!isTripsClosed">
