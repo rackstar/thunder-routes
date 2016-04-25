@@ -73,7 +73,6 @@
 </div>
 
 <!-- Chat window -->
-<div ng-controller="chatController">
   <div class="chatWindow" scroll-bottom="messages">
     <div class="row">
       <div class="col-md-5">
@@ -82,7 +81,9 @@
           <div class="panel-heading" id="accordion">
             <span class="glyphicon glyphicon-comment"></span> Chat
             <div class="btn-group pull-right">
-              <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" ng-click="getChat()">
+              <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+              <!-- ng-click=getChat() function itself is working but if combined with collapse function it jumps up, cant find away to prevent it-->
+<!--               <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" ng-click="getChat(); $event.stopPropagation();"> -->
                 <span class="glyphicon glyphicon-chevron-down"></span>
               </a>
             </div>
@@ -117,11 +118,10 @@
                 </span>
               </div>
             </div>
-          </div>
+          <!-- </div> -->
         </div>
       </div>
     </div>
   </div>
-</div>
 <!-- Very important invisible div for places search -->
 <div id="invisible"></div>
