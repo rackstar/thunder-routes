@@ -21,7 +21,7 @@
 </h3></a>
 <!-- Form to create new trip -->
 <div ng-show="!isCreateClosed">
-  <form class="form-inline" name="tripForm" ng-submit="addTrip()">
+  <form class="form-inline get-stops-margin-top" name="tripForm" ng-submit="addTrip()">
     <div class="form-group">
       <div class="row">
         <label>Trip Name: </label>
@@ -38,7 +38,7 @@
         <input name="end" id="end" type="text" class="form-control" 
           ng-class="{'invalid-form': tripForm.end.$invalid && tripForm.end.$touched}"
           placeholder="End here" ng-model="input.end" required />
-        <button class="btn btn-default" ng-disabled="tripForm.$invalid">Create Trip</button>
+        <button class="btn btn-warning" ng-disabled="tripForm.$invalid">Create Trip</button>
       </div>
     </div>
   </form>
@@ -75,7 +75,7 @@
     </div>
     <div class="col-xs-4 centered">
       <a ui-sref="trip({ tripId: trip._id })">
-        <button class="saved-trip-link btn">View this Trip</button>
+        <button class="saved-trip-link btn btn-warning">View this Trip</button>
       </a>
     </div>
   </div>
