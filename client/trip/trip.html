@@ -82,13 +82,13 @@
           <div class="panel-heading" id="accordion">
             <span class="glyphicon glyphicon-comment"></span> Chat
             <div class="btn-group pull-right">
-              <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" ng-click="myFunction()">
+              <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" ng-click="getChat()">
                 <span class="glyphicon glyphicon-chevron-down"></span>
               </a>
             </div>
           </div>
           <div class="panel-collapse collapse" id="collapseOne">
-            <div class="panel-body">
+            <div class="panel-body messages">
               <!-- MESSAGES -->
               <ul class="chat" ng-repeat="msg in messages">
                 <li class="left clearfix"><span class="chat-img pull-left">
