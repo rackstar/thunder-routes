@@ -1,4 +1,6 @@
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
 
@@ -41,7 +43,7 @@ h1 {
 }
 
 .dropdown-toggle {
-  background: rgba(0,0,0,0);
+  background: rgba(0, 0, 0, 0);
   color: white;
   outline: none;
   border: none;
@@ -98,7 +100,7 @@ form * {
   padding: 15px 0;
 }
 
-.row{
+.row {
   margin: 0 15px 25px;
 }
 
@@ -116,10 +118,10 @@ i {
 }
 
 h3 {
- font: 1.5em "Fugaz One";
- color: #FFF;
- padding: 10px 0;
- background-color: #003136;
+  font: 1.5em "Fugaz One";
+  color: #FFF;
+  padding: 10px 0;
+  background-color: #003136;
 }
 
 a:hover {
@@ -165,7 +167,7 @@ a:hover {
   margin: 0;
 }
 
-.trip-start, 
+.trip-start,
 .trip-end {
   text-align: left;
   margin-bottom: 0
@@ -179,7 +181,8 @@ a:hover {
   visibility: hidden;
 }
 
-.invalid-form, .invalid-form:focus {
+.invalid-form,
+.invalid-form:focus {
   border-color: red;
   box-shadow: 0 0 8px red;
 }
@@ -196,66 +199,53 @@ a:hover {
 .chatWindow {
   left: 50%;
 }
-/*a[ng-click]{
-    cursor: pointer;
-}*/
-.chat
-{
-    list-style: none;
-    margin: 0;
-    padding: 0;
+
+.chat {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.chat li
-{
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px dotted #B3A9A9;
+.chat li {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #B3A9A9;
 }
 
-.chat li.left .chat-body
-{
-    margin-left: 60px;
+.chat li.left .chat-body {
+  margin-left: 60px;
 }
 
-.chat li.right .chat-body
-{
-    margin-right: 60px;
+.chat li.right .chat-body {
+  margin-right: 60px;
 }
 
-
-.chat li .chat-body p
-{
-    margin: 0;
-    color: #777777;
+.chat li .chat-body p {
+  margin: 0;
+  color: #777777;
 }
 
-.panel .slidedown .glyphicon, .chat .glyphicon
-{
-    margin-right: 5px;
+.panel .slidedown .glyphicon,
+.chat .glyphicon {
+  margin-right: 5px;
 }
 
-.panel-body
-{
-    overflow-y: scroll;
-    height: 400px;
+.panel-body {
+  overflow-y: scroll;
+  height: 400px;
 }
 
-::-webkit-scrollbar-track
-{
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    background-color: #F5F5F5;
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
 }
 
-::-webkit-scrollbar
-{
-    width: 12px;
-    background-color: #F5F5F5;
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
 }
 
-::-webkit-scrollbar-thumb
-{
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: #555;
->>>>>>> (style) Add style for chat window
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #555;
 }
