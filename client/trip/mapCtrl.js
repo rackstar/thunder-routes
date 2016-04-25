@@ -115,6 +115,15 @@ angular.module('roadtrippin.maps', [])
             place.rating = yelpData.rating;
             place.url = yelpData.url;
             place.image = yelpData.image;
+            place.categories = '';
+            var catLength = yelpData.categories.length;
+            yelpData.categories.forEach(function(category, index) {
+              if(catLength === index + 1) {
+                place.categories += category[0];
+              } else {
+                place.categories += category[0] + '; ';
+              }
+            });
             console.log(yelpData.image, 'image link');
             place.location = place.location.split(', ');
             $scope.places.push(place);
