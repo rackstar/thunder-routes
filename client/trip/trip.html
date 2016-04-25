@@ -54,5 +54,74 @@
   </div>
 </div>
 
+<!-- Saved routes -->
+<div class="col-xs-12 savedRoutes">
+  <h3 class="infoHeader"><i class="fa fa-caret-right fa-rotate-90" aria-hidden="true"></i>Saved Routes</h3>
+  <div class="row info save-routes" ng-repeat="route in savedRoutes">
+    <div class="col-xs-4">
+      <p class="route-start">From: {{ route.startPoint }}</p>
+      <p class="route-end">To: {{ route.endPoint }}</p>
+    </div>
+    <div class="col-xs-4">
+      <!-- <div class="stop-count">Number of stops: <br /> {{ route.wayPoints.length/2 }}</div> -->
+      <div class="stop-count">{{route.wayPoints.length/2}} stop<span ng-if="route.wayPoints.length > 2">s</span></div>
+    </div>
+    <div class="col-xs-4 centered">
+      <button class="saved-route-link btn" ng-click="viewSavedRoute(route.hash)">View this Route</button>
+    </div>
+  </div>
+</div>
+
+<!-- Chat window -->
+  <div class="chatWindow" scroll-bottom="messages">
+    <div class="row">
+      <div class="col-md-5">
+        <!-- HEADER -->
+        <div class="panel panel-primary">
+          <div class="panel-heading" id="accordion">
+            <span class="glyphicon glyphicon-comment"></span> Chat
+            <div class="btn-group pull-right">
+              <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+              <!-- ng-click=getChat() function itself is working but if combined with collapse function it jumps up, cant find away to prevent it-->
+<!--               <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" ng-click="getChat(); $event.stopPropagation();"> -->
+                <span class="glyphicon glyphicon-chevron-down"></span>
+              </a>
+            </div>
+          </div>
+          <div class="panel-collapse collapse" id="collapseOne">
+            <div class="panel-body messages">
+              <!-- MESSAGES -->
+              <ul class="chat" ng-repeat="msg in messages">
+                <li class="left clearfix"><span class="chat-img pull-left">
+                                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                            </span>
+                  <div class="chat-body clearfix">
+                    <div class="header">
+                      <strong class="primary-font">{{msg.username}}</strong><small class="pull-right text-muted">
+                        <span class="glyphicon glyphicon-time"></span>{{msg.time}}</small>
+                    </div>
+                    <p>{{msg.message}}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!-- FOOTER -->
+            <div class="panel-footer">
+              <div class="input-group">
+                <!-- ngsubmit -->
+                <form id="chatInput" ng-submit="sendMsg($event)" action="">
+                  <!-- ngmodel -->
+                  <input id="btn-input" ng-model="data.message" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                </form>
+                <span class="input-group-btn">
+                  <button class="btn btn-warning btn-sm" id="btn-chat">Send</button>
+                </span>
+              </div>
+            </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- Very important invisible div for places search -->
 <div id="invisible"></div>

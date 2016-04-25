@@ -2,6 +2,7 @@ angular.module('roadtrippin', [
   'roadtrippin.maps',
   'roadtrippin.mapFactory',
   'roadtrippin.tripFactory',
+  'roadtrippin.chatFactory',
   'gservice',
   'roadtrippin.home',
   'roadtrippin.auth',

@@ -1,6 +1,6 @@
 angular.module('roadtrippin.maps', [])
   .controller('mapController', function($scope, $stateParams, mapFactory, authFactory, 
-    tripFactory, gservice, $location, $anchorScroll) {
+    tripFactory, gservice, $location, $anchorScroll, socket, chatFactory) {
     $scope.username = authFactory.getCurrentUser();
     $scope.route = {};
     $scope.route.stopOptions = [0, 1, 2, 3, 4, 5];
@@ -8,6 +8,7 @@ angular.module('roadtrippin.maps', [])
     $scope.places = [];
     $scope.savedRoutes = [];
     $scope.input = {};
+    $scope.messages = [];
 
     mapFactory.locationAutoComplete('start', function(address) {
       $scope.input.start = address;
@@ -98,6 +99,32 @@ angular.module('roadtrippin.maps', [])
           .then(function (places) { splitLocations(places); });
         }
       }
+    };
+
+    $scope.sendMsg  = function($event) {
+      $scope.data = {
+        trip_id: $stateParams.tripId,
+        username: $scope.username,
+        message: $scope.data.message
+      };
+      console.log($scope.data, 'data being sent');
+      socket.emit('new message', $scope.data);
+      $scope.data.message = '';
+      $event.preventDefault();
+    };
+
+    socket.on('message saved', function(msg) {
+      // msg.time = moment().fromNow()
+      $scope.messages.push(msg);
+      $scope.$digest();
+    });
+
+    $scope.getChat = function(tripId) {
+      chatFactory.getChat($stateParams.tripId)
+        .then(function(messages) {
+          $scope.messages = messages;
+          console.log($scope.messages)
+        });
     };
 
     $scope.getTrip();
