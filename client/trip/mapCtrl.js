@@ -59,7 +59,7 @@ angular.module('roadtrippin.maps', [])
     };
 
     $scope.saveRoute = function () {
-      mapFactory.saveJourneyWithWaypoints(gservice.thisTrip).then($scope.getAll());
+      mapFactory.saveJourneyWithWaypoints(gservice.thisJourney).then($scope.getAll());
     };
 
     $scope.getAll = function () {
