@@ -20,38 +20,43 @@
   <span>Create a Trip</span>
 </h3></a>
 <!-- Form to create new trip -->
-<form class="form-inline" name="tripForm" ng-show="!isCreateClosed" ng-submit="addTrip()">
-  <div class="form-group">
-    <div class="row">
-      <label>Trip Name: </label>
-      <input name="tripname" type="text" class="form-control" 
-        ng-class="{'invalid-form': tripForm.tripname.$invalid && tripForm.tripname.$touched}"
-        placeholder="Start here" ng-model="input.tripname" required />
+<div ng-show="!isCreateClosed">
+  <form class="form-inline" name="tripForm" ng-submit="addTrip()">
+    <div class="form-group">
+      <div class="row">
+        <label>Trip Name: </label>
+        <input name="tripname" type="text" class="form-control" 
+          ng-class="{'invalid-form': tripForm.tripname.$invalid && tripForm.tripname.$touched}"
+          placeholder="Start here" ng-model="input.tripname" required />
+      </div>
+      <div class="row">
+        <label>Start: </label>
+        <input name="start" id="start" type="text" class="form-control" 
+          ng-class="{'invalid-form': tripForm.start.$invalid && tripForm.start.$touched}"
+          placeholder="Start here" ng-model="input.start" required />
+        <label>Destination: </label>
+        <input name="end" id="end" type="text" class="form-control" 
+          ng-class="{'invalid-form': tripForm.end.$invalid && tripForm.end.$touched}"
+          placeholder="End here" ng-model="input.end" required />
+        <button class="btn btn-default" ng-disabled="tripForm.$invalid">Create Trip</button>
+      </div>
     </div>
-    <div class="row">
-      <label>Start: </label>
-      <input name="start" id="start" type="text" class="form-control" 
-        ng-class="{'invalid-form': tripForm.start.$invalid && tripForm.start.$touched}"
-        placeholder="Start here" ng-model="input.start" required />
-      <label>Destination: </label>
-      <input name="end" id="end" type="text" class="form-control" 
-        ng-class="{'invalid-form': tripForm.end.$invalid && tripForm.end.$touched}"
-        placeholder="End here" ng-model="input.end" required />
-      <button class="btn btn-default" ng-disabled="tripForm.$invalid">Create Trip</button>
-    </div>
-    <div class="row">
+  </form>
+  <form class="form-inline" ng-submit="addInviteField()">
+    <div class="form-group">
       <div class="row" ng-repeat="field in input.inviteFields track by $index">
         <label>Username: </label>
         <input type="text" class="form-control" placeholder="Invite friend" 
           ng-model="input.inviteFields[$index]" />
-        <button class="btn btn-default" ng-click="addInviteField()"
+        <button class="btn btn-default" 
           ng-show="$index === input.inviteFields.length - 1"> + </button>
-        <button class="btn btn-default" ng-click="removeInviteField()"
-          ng-show="$index && $index === input.inviteFields.length - 1"> - </button>
+        <div class="btn btn-default" ng-click="removeInviteField()"
+          ng-show="$index && $index === input.inviteFields.length - 1"> - </div>
       </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>
+
 
 <!-- Saved trips -->
 <a class="infoHeader" ng-click="isTripsClosed = !isTripsClosed"><h3>
@@ -59,7 +64,7 @@
   <span>Saved Trips</span>
 </h3></a>
 <div class="col-xs-12 savedTrips" ng-show="!isTripsClosed">
-  <div class="row info save-trips" ng-repeat="trip in savedTrips">
+  <div class="row info save-trips" ng-repeat="trip in savedTrips | orderBy:'$index':true">
     <div class="col-xs-4">
       <p class="trip-start">From: {{ trip.journeys[0].startPoint }}</p>
       <p class="trip-end">To: {{ trip.journeys[0].endPoint }}</p>
