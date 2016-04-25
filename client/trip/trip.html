@@ -163,6 +163,26 @@
   </div>
 </div>
 
+<!-- HOTELS -->
+<h3>Top Hotels in {{hotels[0].location.city}}</h3>
+<div class="hotels" ng-repeat="hotel in hotels">
+  <p class="yelpName"><a ng-href="{{hotel.url}}" target="_blank">{{hotel.name}}</a>
+  </p>
+  <img class="rating" ng-src="{{hotel.rating}}" />
+  <p class="phone">{{hotel.phone}}</p>
+  <img class="yelpPic" ng-src="{{hotel.image}}"/>
+</div>
+
+<!-- ATTRACTIONS -->
+<h3>Top Attractions in {{attractions[0].location.city}}</h3>
+<div class="attractions" ng-repeat="attraction in attractions">
+  <p class="yelpName"><a ng-href="{{attraction.url}}" target="_blank">{{attraction.name}}</a>
+  </p>
+  <img class="rating" ng-src="{{attraction.rating}}" />
+  <p class="phone">{{attraction.phone}}</p>
+  <img class="yelpPic" ng-src="{{attraction.image}}"/>
+</div>
+
 <!-- Very important invisible div for places search -->
 <div id="invisible"></div>
 <a id="bottom"></a>
