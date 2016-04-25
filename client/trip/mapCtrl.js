@@ -198,10 +198,12 @@ angular.module('roadtrippin.maps', [])
     });
 
     $scope.getChat = function(tripId) {
+      $scope.isChatClosed = !$scope.isChatClosed;
+      $location.hash('bottom');
+      setTimeout($anchorScroll, 200);
       chatFactory.getChat($stateParams.tripId)
         .then(function(messages) {
           $scope.messages = messages;
-          console.log($scope.messages)
         });
     };
 
