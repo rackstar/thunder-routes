@@ -55,20 +55,29 @@ angular.module('gservice', [])
             //format and send request for the same trip but with waypoints
             var stops = [];
             var restWaypoints = getWaypoints(result.routes[0].overview_path, numStops);
+            var restPromise = getNearbyThings(restWaypoints); //testing testing
+            var placePoints;
             if (distance) {
               var gasWaypoints = getWaypoints(result.routes[0].overview_path, numStops, distance);
-            }
-            var restPromise = getNearbyThings(restWaypoints); //testing testing
-            var gasPromise = getNearbyThings(gasWaypoints, null, 'gas');
-            restPromise.then(function (restPoints) {
-              gasPromise.then(function(gasPoints) {
-                var placePoints = restPoints.concat(gasPoints);
+              var gasPromise = getNearbyThings(gasWaypoints, null, 'gas');
+              restPromise.then(function (restPoints) {
+                gasPromise.then(function(gasPoints) {
+                  placePoints = restPoints.concat(gasPoints);
+                  googleMapService.render(officialStart, officialEnd, placePoints)
+                  .then(function () {
+                    deferred.resolve(googleMapService.thisJourney.waypoints);
+                  });
+                });
+              });
+            } else {
+              restPromise.then(function (restPoints) {
+                placePoints = restPoints;
                 googleMapService.render(officialStart, officialEnd, placePoints)
                 .then(function () {
                   deferred.resolve(googleMapService.thisJourney.waypoints);
                 });
               });
-            });
+            }
           }
         });
         return deferred.promise;

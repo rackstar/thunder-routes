@@ -171,7 +171,8 @@ module.exports = {
             rating: business.rating_img_url,
             url: business.url,
             phone: business.display_phone,
-            image: business.image_url
+            image: business.image_url,
+            categories: business.categories
           };
           res.status(200).json(yelpData);
         }
