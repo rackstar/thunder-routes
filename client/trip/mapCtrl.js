@@ -4,11 +4,14 @@ angular.module('roadtrippin.maps', [])
     $scope.username = authFactory.getCurrentUser();
     $scope.route = {};
     $scope.route.stopOptions = [0, 1, 2, 3, 4, 5];
-    $scope.route.numStops = 0;
+    $scope.route.numStops = '';
     $scope.places = [];
     $scope.savedRoutes = [];
     $scope.input = {};
     $scope.messages = [];
+    $scope.isChatClosed = true;
+    $scope.isStopsClosed = false;
+    $scope.isUsersClosed = false;
 
     mapFactory.locationAutoComplete('start', function(address) {
       $scope.input.start = address;
@@ -124,12 +127,10 @@ angular.module('roadtrippin.maps', [])
                 place.categories += category[0] + '; ';
               }
             });
-            console.log(yelpData.image, 'image link');
             place.location = place.location.split(', ');
             $scope.places.push(place);
           });
       });
-      console.log(gservice.thisJourney);
     };
 
     $scope.getLetter = function (i) {

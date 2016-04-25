@@ -17,41 +17,66 @@
 
 <!-- Search form -->
 <div class="row">
-  <form class="form-inline">
-    <div class="form-group">
-      <div class="col-xs-12">
-        <label for="start">Trip Name: </label>
-        <input id="tripname" type="text" class="form-control" ng-model="input.tripname" />
-        <label for="start">Start: </label>
-        <input id="start" type="text" class="form-control" 
-          placeholder="Enter start point" ng-model="input.start" />
-        <label for="end">Destination: </label>
-        <input id="end" type="text" class="form-control" 
-          placeholder="Enter end point" ng-model="input.end" />
-        <select class="form-control selectpicker" ng-model ="route.numStops" ng-options="n for n in route.stopOptions">
-        </select>
-        <label for="gas">Miles Between Gas Stops: </label>
-        <input id="gas" type="text" class="form-control"
-          placeholder="Enter number of miles..." ng-model="input.gas" />
-        <button id="search-btn" class="btn btn-default" ng-click="getRoute()">Get Stops
-        </button>
-      </div>
+  <form class="col-xs-10">
+    <div class="col-xs-2">
+      <label>Trip Name: </label>
+      <input id="tripname" type="text" class="form-control" ng-model="input.tripname" />
+    </div>
+    <div class="col-xs-2">
+      <label>Start: </label>
+      <input id="start" type="text" class="form-control" 
+        placeholder="Enter start point" ng-model="input.start" />
+    </div>
+    <div class="col-xs-2">
+      <label>Destination: </label>
+      <input id="end" type="text" class="form-control" 
+        placeholder="Enter end point" ng-model="input.end" />
+    </div>
+    <div class="col-xs-2">
+      <label for="gas">Food Stops: </label>
+      <select class="form-control selectpicker" ng-model ="route.numStops" ng-options="n for n in route.stopOptions">
+      </select>
+    </div>
+    <div class="col-xs-2">
+      <label for="gas">Miles for Gas Stops: </label>
+      <input id="gas" type="text" class="form-control"
+        placeholder="Enter number of miles..." ng-model="input.gas" />
+    </div>
+    <div class="col-xs-2 get-stops-margin-top">
+      <button id="search-btn" class="btn btn-default" ng-click="getRoute()">Get Stops</button>
     </div>
   </form>
+
+  <div class="col-xs-2">
+
+    <button class="btn btn-block btn-warning get-stops-margin-top" 
+      ng-click="updateTrip()">Save All Changes</button>
+
+  </div>
 </div>
 
 <!-- Container for map and stops -->
 <div class="row">
   <!-- Map -->
-  <div class="col-xs-8">
+  <div class="col-xs-7">
     <div id="map"></div>
   </div>
+
   <!-- Stops -->
-  <h3 class="col-xs-4 infoHeader"><i class="fa fa-caret-right fa-rotate-90" aria-hidden="true"></i>Your Stops</h3>
-  <div class="col-xs-4 info-content pre-scrollable">
-    <div class="row">
-        <div class="info stop-info" ng-repeat="place in places | orderBy:'position'">
-          <p class="stop-name">{{getLetter(place.position)}}. <a ng-href="{{place.url}}" target="_blank">{{place.name}}</a>
+  <div class="col-xs-3">
+    <a ng-click="isStopsClosed = !isStopsClosed"><h3 class="infoHeader">
+      <i class="fa fa-caret-right" ng-class="{'fa-rotate-90': !isStopsClosed}" aria-hidden="false"></i>
+      <span>Stops</span>
+      <span>({{places.length}})</span>
+    </h3></a>
+    <div class="info-content pre-scrollable" ng-show="!isStopsClosed">
+      <div class="row info" ng-repeat="place in places | orderBy:'position'">
+        <div class="col-xs-4">
+          <img class="yelp-img" ng-src="{{place.image}}"/>
+        </div>
+        <div class="col-xs-8">
+          <p class="stop-name">{{getLetter(place.position)}}. 
+            <a ng-href="{{place.url}}" target="_blank">{{place.name}}</a>
           </p>
           <img class="rating" ng-src="{{place.rating}}" />
           <p class="categories">Type: {{place.categories}}</p>
@@ -60,86 +85,85 @@
           <p class="stop-address">{{place.location[3]}}</p>
           <p class="phone">{{place.phone}}</p>
         </div>
-        <!--******IMAGE NOT SHOWING HERE******-->
-        <img class="placePic" ng-src="{{place.image}}"/>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-xs-12">
-    <label>{{input.users.length}} going: </label>
-    <div class="row" ng-repeat="user in input.users track by $index">
-      <div class="col-xs-3">{{user}}</div>
-      <button class="btn btn-default" ng-click="removeUser($index)">Remove</button>
-    </div>
-    <div class="row">
-      <form class="form-inline" name="addUserForm" 
-        ng-submit="addUser(input.userInput); input.userInput = '';">
-        <input type="text" class="form-control" placeholder="Invite friend" 
-          ng-model="input.userInput" required />
-        <button class="btn btn-default" ng-disabled="addUserForm.$invalid">Add</button>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- Chat window -->
-  <div class="chatWindow" scroll-bottom="messages">
-    <div class="row">
-      <div class="col-md-5">
-        <!-- HEADER -->
-        <div class="panel panel-primary">
-          <div class="panel-heading" id="accordion">
-            <span class="glyphicon glyphicon-comment"></span> Chat
-            <div class="btn-group pull-right">
-              <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-              <!-- ng-click=getChat() function itself is working but if combined with collapse function it jumps up, cant find away to prevent it-->
-<!--               <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" ng-click="getChat(); $event.stopPropagation();"> -->
-                <span class="glyphicon glyphicon-chevron-down"></span>
-              </a>
-            </div>
-          </div>
-          <div class="panel-collapse collapse" id="collapseOne">
-            <div class="panel-body messages">
-              <!-- MESSAGES -->
-              <ul class="chat" ng-repeat="msg in messages">
-                <li class="left clearfix"><span class="chat-img pull-left">
-                                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                            </span>
-                  <div class="chat-body clearfix">
-                    <div class="header">
-                      <strong class="primary-font">{{msg.username}}</strong><small class="pull-right text-muted">
-                        <span class="glyphicon glyphicon-time"></span>{{msg.time}}</small>
-                    </div>
-                    <p>{{msg.message}}</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <!-- FOOTER -->
-            <div class="panel-footer">
-              <div class="input-group">
-                <!-- ngsubmit -->
-                <form id="chatInput" ng-submit="sendMsg($event)" action="">
-                  <!-- ngmodel -->
-                  <input id="btn-input" ng-model="data.message" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                </form>
-                <span class="input-group-btn">
-                  <button class="btn btn-warning btn-sm" id="btn-chat">Send</button>
-                </span>
-              </div>
-            </div>
-          <!-- </div> -->
-        </div>
       </div>
     </div>
   </div>
 
+  <!-- User list and save changes button -->
+  <div class="col-xs-2">
+    <a ng-click="isUsersClosed = !isUsersClosed"><h3 class="infoHeader">
+      <i class="fa fa-caret-right" ng-class="{'fa-rotate-90': !isUsersClosed}" aria-hidden="false"></i>
+      <span>Friends</span>
+      <span>({{input.users.length}})</span>
+    </h3></a>
+
+    <div class="row info">
+      <form class="" name="addUserForm" 
+        ng-submit="addUser(input.userInput); input.userInput = '';">
+        <input type="text" class="form-control" placeholder="Invite friend" 
+          ng-model="input.userInput" required />
+      </form>
+    </div>
+    <div class="friends-info-content" ng-show="!isUsersClosed">
+      <div class="row info" ng-repeat="user in input.users track by $index">
+        <label class="friend-name">{{user}}</label>
+        <button class="btn btn-sm btn-default pull-right friend-button" ng-click="removeUser($index)">Uninvite</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="row">
-  <button class="btn btn-default" 
-    ng-click="updateTrip()">Save Changes</button>
+<!-- Chat window -->
+  <div class="col-xs-7">
+    <!-- HEADER -->
+    <div class="panel">
+      <div class="panel-heading chat-header" id="accordion">
+        <span class="glyphicon glyphicon-comment"></span> Chat
+        <div class="btn-group pull-right">
+          <a class="infoHeader" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" ng-click="getChat()">
+            <i class="fa fa-caret-left" ng-class="{'fa-rotate-270': !isChatClosed}" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+      <div class="panel-collapse collapse" id="collapseOne">
+        <!-- MESSAGES -->
+        <div class="panel-body messages" scroll-bottom="messages">
+          <ul class="chat" ng-repeat="msg in messages">
+            <li class="left clearfix">
+              <span class="chat-img pull-left">
+                <img src="http://placehold.it/50/55C1E7/fff&text=U" 
+                  alt="User Avatar" class="img-circle" />
+              </span>
+              <div class="chat-body clearfix">
+                <div class="header">
+                  <strong class="primary-font">{{msg.username}}</strong><small class="pull-right text-muted">
+                    <span class="glyphicon glyphicon-time"></span>{{msg.time}}</small>
+                </div>
+                <p>{{msg.message}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <!-- FOOTER -->
+        <div class="panel-footer">
+          <div class="input-group">
+            <!-- ngsubmit -->
+            <form id="chatInput" ng-submit="sendMsg($event)" action="">
+              <!-- ngmodel -->
+              <input id="btn-input" ng-model="data.message" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+            </form>
+            <span class="input-group-btn">
+              <button class="btn btn-warning btn-sm" id="btn-chat">Send</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Very important invisible div for places search -->
 <div id="invisible"></div>
+<a id="bottom"></a>
+
