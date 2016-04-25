@@ -19,14 +19,55 @@ angular.module('roadtrippin.maps', [])
 
     $scope.getTrip = function() {
       tripFactory.getTrip($stateParams.tripId)
+        .then(function(tripObject) {
+          var trip = tripObject.body;
+          var start = trip.journeys[0].startPoint;
+          var end = trip.journeys[0].endPoint;
+          var waypoints = trip.journeys[0].wayPoints.map(function(place) {
+            return JSON.parse(place);
+          });
+          $scope.input.tripname = trip.name;
+          $scope.input.start = start;
+          $scope.input.end = end;
+          $scope.input.users = tripObject.usernames;
+          gservice.refresh();
+          gservice.render(start, end, waypoints)
+            .then(splitLocations);
+        });
+    };
+
+    $scope.updateTrip = function() {
+      var waypoints = gservice.thisJourney.waypoints.map(function (place) {
+        return JSON.stringify(place);
+      });
+      var journey = {
+        startPoint: $scope.input.start,
+        endPoint: $scope.input.end,
+        wayPoints: waypoints
+      };
+      var tripObject = {
+        tripId: $stateParams.tripId,
+        tripname: $scope.input.tripname,
+        journey: journey,
+        users: $scope.input.users,
+      };
+      tripFactory.updateTrip(tripObject)
         .then(function(trip) {
           console.log(trip);
-          $scope.input.tripname = trip.name;
-          $scope.input.start = trip.journeys[0].startPoint;
-          $scope.input.end = trip.journeys[0].endPoint;
-          gservice.refresh();
-          gservice.render(trip.journeys[0].startPoint, trip.journeys[0].endPoint, trip.journeys[0].wayPoints);
+        })
+        .catch(function(err) {
+          console.log(err);
         });
+    };
+
+    $scope.removeUser = function(userIndex) {
+      $scope.input.users.splice(userIndex, 1);
+    };
+
+    $scope.addUser = function(user) {
+      if ($scope.input.users.indexOf(user) < 0) {
+        $scope.input.users.push(user);
+      }
     };
 
     //this is a call to our Google maps API factory for directions
@@ -52,6 +93,7 @@ angular.module('roadtrippin.maps', [])
         place.location = place.location.split(', ');
         $scope.places.push(place);
       });
+      console.log(gservice.thisJourney);
     };
 
     $scope.getLetter = function (i) {
