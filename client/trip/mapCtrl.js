@@ -75,10 +75,12 @@ angular.module('roadtrippin.maps', [])
       // If start/end not set by autocomplete, set from value of field.
       $scope.route.start = $scope.route.start || document.getElementById('start').value;
       $scope.route.end = $scope.route.end || document.getElementById('end').value;
-      gservice.calcRoute($scope.route.start, $scope.route.end, $scope.route.numStops)
+      $scope.route.gas = $scope.route.gas || document.getElementById('gas').value;
+      gservice.calcRoute($scope.route.start, $scope.route.end, $scope.route.numStops, $scope.route.gas)
         .then(function(places) { splitLocations(places); });
       $scope.route.start = null;
       $scope.route.end = null;
+      $scope.route.gas = null;
     };
 
     $scope.yelp = function(dataQuery, obj) {
