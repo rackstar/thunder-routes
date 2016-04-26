@@ -38,9 +38,9 @@
       </select>
     </div>
     <div class="col-xs-2">
-      <label for="gas">Miles for Gas Stops: </label>
-      <input id="gas" type="text" class="form-control"
-        placeholder="Enter number of miles..." ng-model="input.gas" />
+      <label for="gas">Gas Stops: </label>
+      <select class="form-control selectpicker" ng-model ="route.gasStops" ng-options="n for n in route.gasOptions">
+      </select>
     </div>
     <div class="col-xs-2 get-stops-margin-top">
       <button id="search-btn" class="btn btn-default" ng-click="getRoute()">Get Stops</button>

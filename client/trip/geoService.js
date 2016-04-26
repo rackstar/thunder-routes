@@ -40,7 +40,7 @@ angular.module('gservice', [])
       // --------------------------------------------------------------
 
       //calculate a route (promisified function)
-      googleMapService.calcRoute = function (start, end, numStops, distance) {
+      googleMapService.calcRoute = function (start, end, numStops, gasStops) {
         var deferred = $q.defer();
         var request = {
           origin: start,
@@ -57,9 +57,9 @@ angular.module('gservice', [])
             var restWaypoints = getWaypoints(result.routes[0].overview_path, numStops);
             var restPromise = getNearbyThings(restWaypoints); //testing testing
             var placePoints;
-            if (distance) {
-              var gasWaypoints = getWaypoints(result.routes[0].overview_path, numStops, distance);
-              var gasPromise = getNearbyThings(gasWaypoints, null, 'gas');
+            if (gasStops) {
+              var gasWaypoints = getWaypoints(result.routes[0].overview_path, numStops, gasStops);
+              var gasPromise = getNearbyThings(gasWaypoints, '1000', 'gas station');
               restPromise.then(function (restPoints) {
                 gasPromise.then(function(gasPoints) {
                   placePoints = restPoints.concat(gasPoints);
@@ -121,11 +121,11 @@ angular.module('gservice', [])
 
       // get waypoints by breaking up trip into even-ish segments
       // Distance used for gas stops
-      var getWaypoints = function (waypointArray, numStops, distance) {
+      var getWaypoints = function (waypointArray, numStops, gasStops) {
         var points = [];
         var stopDistance;
-        if (distance) {
-          numStops = Math.floor(waypointArray.length / distance);
+        if (gasStops) {
+          numStops = gasStops;
         }
         stopDistance = Math.floor(waypointArray.length / (numStops + 1));
         for (i = 0; i < numStops; i++) {
@@ -151,7 +151,7 @@ angular.module('gservice', [])
         waypointArray.forEach(function (w) {
           placeRequests.push({
             location: new google.maps.LatLng(w.lat, w.lng),
-            radius: distance || '500',
+            radius: distance || '1000',
             query: type || 'restaurant'
           });
         });
