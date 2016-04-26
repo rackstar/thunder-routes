@@ -96,19 +96,20 @@
       <span>Friends</span>
       <span>({{input.users.length}})</span>
     </h3></a>
-
+    <div ng-show="!isUsersClosed">
     <div class="row info">
-      <form class="" name="addUserForm" 
+      <form class="" name="addUserForm"
         ng-submit="addUser(input.userInput); input.userInput = '';">
         <input type="text" class="form-control" placeholder="Invite friend" 
           ng-model="input.userInput" required />
       </form>
     </div>
-    <div class="friends-info-content" ng-show="!isUsersClosed">
+    <div class="friends-info-content">
       <div class="row info" ng-repeat="user in input.users track by $index">
         <label class="friend-name">{{user}}</label>
         <button class="btn btn-sm btn-default pull-right friend-button" ng-click="removeUser($index)">Uninvite</button>
       </div>
+    </div>
     </div>
   </div>
 </div>
