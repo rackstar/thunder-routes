@@ -7,7 +7,8 @@ angular.module('roadtrippin', [
   'roadtrippin.home',
   'roadtrippin.auth',
   'roadtrippin.authFactory',
-  'ui.router'
+  'ui.router',
+  'angularMoment'
 ])
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {

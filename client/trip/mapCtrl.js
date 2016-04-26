@@ -213,7 +213,7 @@ angular.module('roadtrippin.maps', [])
     };
 
     socket.on('message saved', function(msg) {
-      // msg.time = moment().fromNow()
+      msg.time = new Date();
       $scope.messages.push(msg);
       $scope.$digest();
     });
