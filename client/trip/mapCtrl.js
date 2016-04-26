@@ -4,7 +4,9 @@ angular.module('roadtrippin.maps', [])
     $scope.username = authFactory.getCurrentUser();
     $scope.route = {};
     $scope.route.stopOptions = [0, 1, 2, 3, 4, 5];
-    $scope.route.numStops = '';
+    $scope.route.gasOptions = [0, 1, 2, 3, 4, 5];
+    $scope.route.numStops = 0;
+    $scope.route.gasStops = 0;
     $scope.places = [];
     $scope.savedRoutes = [];
     $scope.input = {};
@@ -90,10 +92,12 @@ angular.module('roadtrippin.maps', [])
     //this is a call to our Google maps API factory for directions
     $scope.getRoute = function() {
       // If start/end not set by autocomplete, set from value of field.
+      if($scope.route.numStops + $scope.route.gasStops > 7) {
+        return;
+      }
       $scope.route.start = $scope.route.start || document.getElementById('start').value;
       $scope.route.end = $scope.route.end || document.getElementById('end').value;
-      $scope.route.gas = $scope.route.gas || document.getElementById('gas').value;
-      gservice.calcRoute($scope.route.start, $scope.route.end, $scope.route.numStops, $scope.route.gas)
+      gservice.calcRoute($scope.route.start, $scope.route.end, $scope.route.numStops, $scope.route.gasStops)
         .then(function(places) { splitLocations(places); });
       // get yelp hotels
       tripFactory.hotels($scope.route.end)
@@ -108,7 +112,6 @@ angular.module('roadtrippin.maps', [])
 
       $scope.route.start = null;
       $scope.route.end = null;
-      $scope.route.gas = null;
     };
 
     $scope.yelp = function(dataQuery, obj) {
