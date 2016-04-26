@@ -182,8 +182,9 @@
               </span>
               <div class="chat-body clearfix">
                 <div class="header">
-                  <strong class="primary-font">{{msg.username}}</strong><small class="pull-right text-muted">
-                    <span class="glyphicon glyphicon-time"></span>{{msg.time}}</small>
+                  <strong class="primary-font">{{msg.username}}</strong>
+                  <small class="pull-right text-muted" am-time-ago="msg.time">{{msg.time}}
+                    </small>
                 </div>
                 <p>{{msg.message}}</p>
               </div>
