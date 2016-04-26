@@ -65,7 +65,8 @@ var yelpSearch = function(query, res) {
             url: business.url,
             phone: business.display_phone,
             image: business.image_url,
-            location: business.location
+            location: business.location,
+            categories: business.categories
           };
           bizDetails.push(yelpData);
         });
