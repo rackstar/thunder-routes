@@ -96,36 +96,81 @@
       <span>Friends</span>
       <span>({{input.users.length}})</span>
     </h3></a>
-
+    <div ng-show="!isUsersClosed">
     <div class="row info">
-      <form class="" name="addUserForm" 
+      <form class="" name="addUserForm"
         ng-submit="addUser(input.userInput); input.userInput = '';">
         <input type="text" class="form-control" placeholder="Invite friend" 
           ng-model="input.userInput" required />
       </form>
     </div>
-    <div class="friends-info-content" ng-show="!isUsersClosed">
+    <div class="friends-info-content">
       <div class="row info" ng-repeat="user in input.users track by $index">
         <label class="friend-name">{{user}}</label>
         <button class="btn btn-sm btn-default pull-right friend-button" ng-click="removeUser($index)">Uninvite</button>
       </div>
     </div>
+    </div>
   </div>
 </div>
 
 <div class="row">
-<!-- Chat window -->
-  <div class="col-xs-7">
+  <!-- HOTELS -->
+  <div class="col-xs-3">
+    <a ng-click="isHotelsClosed = !isHotelsClosed"><h3 class="infoHeader">
+      <i class="fa fa-caret-right" ng-class="{'fa-rotate-90': !isHotelsClosed}" aria-hidden="false"></i>
+      Top Hotels <span ng-show="hotels">in {{hotels[0].location.city}}</span>
+    </h3></a>
+    <div class="top-info-content pre-scrollable" ng-show="!isHotelsClosed">
+      <div class="row info" ng-repeat="hotel in hotels">
+        <div class="col-xs-4">
+          <img class="yelp-img" ng-src="{{hotel.image}}"/>
+        </div>
+        <div class="col-xs-8">
+          <p class="stop-name">
+            <a ng-href="{{hotel.url}}" target="_blank">{{hotel.name}}</a>
+          </p>
+          <img class="rating" ng-src="{{hotel.rating}}" />
+          <p class="phone">{{hotel.phone}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTRACTIONS -->
+  <div class="col-xs-4">
+    <a ng-click="isAttractClosed = !isAttractClosed"><h3 class="infoHeader">
+      <i class="fa fa-caret-right" ng-class="{'fa-rotate-90': !isAttractClosed}" aria-hidden="false"></i>
+      Top Attractions <span ng-show="attractions">in {{attractions[0].location.city}}</span>
+    </h3></a>
+    <div class="top-info-content pre-scrollable" ng-show="!isAttractClosed">
+      <div class="row info" ng-repeat="attraction in attractions">
+        <div class="col-xs-4">
+          <img class="yelp-img" ng-src="{{attraction.image}}"/>
+        </div>
+        <div class="col-xs-8">
+          <p class="stop-name">
+            <a ng-href="{{attraction.url}}" target="_blank">{{attraction.name}}</a>
+          </p>
+          <img class="rating" ng-src="{{attraction.rating}}" />
+          <p class="phone">{{attraction.phone}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat window -->
+  <div class="col-xs-5">
     <!-- HEADER -->
     <div class="panel">
-      <div class="panel-heading chat-header" id="accordion">
+      <h3 class="panel-heading chat-header infoHeader" id="accordion">
         <span class="glyphicon glyphicon-comment"></span> Chat
         <div class="btn-group pull-right">
           <a class="infoHeader" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" ng-click="getChat()">
             <i class="fa fa-caret-left" ng-class="{'fa-rotate-270': !isChatClosed}" aria-hidden="true"></i>
           </a>
         </div>
-      </div>
+      </h3>
       <div class="panel-collapse collapse" id="collapseOne">
         <!-- MESSAGES -->
         <div class="panel-body messages" scroll-bottom="messages">
@@ -161,26 +206,6 @@
       </div>
     </div>
   </div>
-</div>
-
-<!-- HOTELS -->
-<h3>Top Hotels in {{hotels[0].location.city}}</h3>
-<div class="hotels" ng-repeat="hotel in hotels">
-  <p class="yelpName"><a ng-href="{{hotel.url}}" target="_blank">{{hotel.name}}</a>
-  </p>
-  <img class="rating" ng-src="{{hotel.rating}}" />
-  <p class="phone">{{hotel.phone}}</p>
-  <img class="yelpPic" ng-src="{{hotel.image}}"/>
-</div>
-
-<!-- ATTRACTIONS -->
-<h3>Top Attractions in {{attractions[0].location.city}}</h3>
-<div class="attractions" ng-repeat="attraction in attractions">
-  <p class="yelpName"><a ng-href="{{attraction.url}}" target="_blank">{{attraction.name}}</a>
-  </p>
-  <img class="rating" ng-src="{{attraction.rating}}" />
-  <p class="phone">{{attraction.phone}}</p>
-  <img class="yelpPic" ng-src="{{attraction.image}}"/>
 </div>
 
 <!-- Very important invisible div for places search -->

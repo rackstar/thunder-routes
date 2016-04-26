@@ -14,6 +14,8 @@ angular.module('roadtrippin.maps', [])
     $scope.isChatClosed = true;
     $scope.isStopsClosed = false;
     $scope.isUsersClosed = false;
+    $scope.isHotelsClosed = true;
+    $scope.isAttractClosed = true;
     $scope.hotels;
     $scope.attractions;
 

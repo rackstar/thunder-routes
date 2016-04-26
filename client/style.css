@@ -159,6 +159,11 @@ a:hover {
   overflow-y: scroll;
 }
 
+.top-info-content {
+  height: 295px;
+  overflow-y: scroll;
+}
+
 .friend-name {
   margin-top: 3px;
 }
@@ -247,7 +252,7 @@ a:hover {
 
 .panel-body {
   overflow-y: scroll;
-  height: 300px;
+  height: 225px;
 }
 
 .chat-header, i {
