@@ -41,7 +41,7 @@ app.post('/signin', userController.signin);
 app.post('/signup', userController.signup);
 
 app.post('/chat', chatController.getChat);
-app.post('/email', tripController.email);
+// app.post('/email', tripController.email);
 
 app.post('/yelp', tripController.yelp);
 app.post('/yelp/hotels', tripController.hotels);

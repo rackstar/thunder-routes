@@ -32,6 +32,26 @@ var mailOptions = {
     subject: 'You have been invited to go roadtrippin!', // Subject line
 };
 
+var validateEmail = function(email) {
+  var re = /\S+@\S+\.\S+/;
+  return re.test(email);
+};
+
+var sendMail = function(email, link) {
+  mailOptions.to = email;
+  mailOptions.html = '<h3><b>Collaborate and plan your trip with Thunder-Routes</b></h3>' +
+                     '<h4>You can join your friends here:</h4>' +
+                     link +
+                     '<p>Happy RoadTrippin!</p>'
+  transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+          console.log(error);
+      }else{
+          console.log('Message sent: ' + info.response);
+      };
+  });
+};
+
 var yelpSearch = function(query, res) {
   yelp.search(query)
     .then(function (data) {
@@ -103,6 +123,13 @@ module.exports = {
                   }
                 });
                 trip.save();
+                users.forEach(function(user) {
+                  // if its an email send mail
+                  if (validateEmail(user)) {
+                    var link = 'http://thunder-routes.herokuapp.com/#/trip/' + trip.id;
+                    sendMail(user, link);
+                  }
+                });
                 res.status(201).json(trip);
               });
           });
@@ -110,6 +137,7 @@ module.exports = {
       .catch(function (error) {
         next(error);
       });
+      
   },
 
   updateTrip: function(req, res, next) {
@@ -188,23 +216,6 @@ module.exports = {
       limit: 1
     };
     yelpSearch(query, res);
-  },
-
-  email: function(req, res) {
-    mailOptions.to = req.body.email;
-    mailOptions.html = '<h3><b>Collaborate and plan your trip with Thunder-Routes</b></h3>' +
-                       '<h4>You can join your friends here:</h4>' +
-                       req.body.link +
-                       '<p>Happy RoadTrippin!</p>'
-    transporter.sendMail(mailOptions, function(error, info){
-        if(error){
-            console.log(error);
-            res.json({yo: 'error'});
-        }else{
-            console.log('Message sent: ' + info.response);
-            res.json({yo: info.response});
-        };
-    });
   },
 
   hotels: function(req, res) {
