@@ -132,14 +132,16 @@ angular.module('roadtrippin.maps', [])
             place.url = yelpData.url;
             place.image = yelpData.image;
             place.categories = '';
-            var catLength = yelpData.categories.length;
-            yelpData.categories.forEach(function(category, index) {
-              if(catLength === index + 1) {
-                place.categories += category[0];
-              } else {
-                place.categories += category[0] + '; ';
-              }
-            });
+            if (yelpData.categories) {
+              var catLength = yelpData.categories.length;
+              yelpData.categories.forEach(function(category, index) {
+                if(catLength === index + 1) {
+                  place.categories += category[0];
+                } else {
+                  place.categories += category[0] + '; ';
+                }
+              });
+            }
             place.location = place.location.split(', ');
             $scope.places.push(place);
           });
