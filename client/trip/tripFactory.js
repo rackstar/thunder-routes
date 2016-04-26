@@ -53,6 +53,30 @@ angular.module('roadtrippin.tripFactory', [])
         url: '/yelp',
         data: data
       }).then(function(res) {
+        return res.data[0];
+      }).catch(function(err) {
+        console.log(err);
+      });
+    };
+
+    var hotels = function(destination) {
+      return $http({
+        method: 'POST',
+        url: '/yelp/hotels',
+        data: { location: destination }
+      }).then(function(res) {
+        return res.data;
+      }).catch(function(err) {
+        console.log(err);
+      });
+    };
+
+    var attractions = function(destination) {
+      return $http({
+        method: 'POST',
+        url: '/yelp/attractions',
+        data: { location: destination }
+      }).then(function(res) {
         return res.data;
       }).catch(function(err) {
         console.log(err);
@@ -84,6 +108,8 @@ angular.module('roadtrippin.tripFactory', [])
       getTrip: getTrip,
       yelp: yelp,
       email: email,
-      validateEmail: validateEmail
+      validateEmail: validateEmail,
+      hotels: hotels,
+      attractions: attractions
     };
   });

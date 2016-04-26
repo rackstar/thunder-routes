@@ -32,6 +32,31 @@ var mailOptions = {
     subject: 'You have been invited to go roadtrippin!', // Subject line
 };
 
+var yelpSearch = function(query, res) {
+  yelp.search(query)
+    .then(function (data) {
+      if (data) {
+        console.log(data, 'top 5');
+        var bizDetails = []
+        data.businesses.forEach(function(business) {
+          var yelpData = {
+            name: business.name,
+            rating: business.rating_img_url,
+            url: business.url,
+            phone: business.display_phone,
+            image: business.image_url,
+            location: business.location
+          };
+          bizDetails.push(yelpData);
+        });
+        res.status(200).json(bizDetails);
+      }
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
+};
+
 module.exports = {
   getAllTrips: function (req, res, next) {
     var username = req.params.username;
@@ -161,25 +186,8 @@ module.exports = {
       term: req.body.name,
       location: req.body.location,
       limit: 1
-    }
-
-    yelp.search(query)
-      .then(function (data) {
-        if (data) {
-          var business = data.businesses[0];
-          var yelpData = {
-            rating: business.rating_img_url,
-            url: business.url,
-            phone: business.display_phone,
-            image: business.image_url,
-            categories: business.categories
-          };
-          res.status(200).json(yelpData);
-        }
-      })
-      .catch(function (err) {
-        console.error(err);
-      });
+    };
+    yelpSearch(query, res);
   },
 
   email: function(req, res) {
@@ -197,5 +205,23 @@ module.exports = {
             res.json({yo: info.response});
         };
     });
+  },
+
+  hotels: function(req, res) {
+    var hotels = {
+      term: 'hotels',
+      location: req.body.location,
+      limit: 5
+    };
+    yelpSearch(hotels, res);
+  },
+
+  attractions: function(req, res) {
+    var attractions = {
+      term: 'attractions',
+      location: req.body.location,
+      limit: 5
+    };
+    yelpSearch(attractions, res);
   }
 };

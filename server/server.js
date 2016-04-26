@@ -15,6 +15,7 @@ var chatController = require('./chat/chatController.js');
 app.use(express.static(__dirname + '/../client'));
 app.use(parser.json());
 app.use(morgan('dev'));
+app.use(userController.errorHandler);
 
 // MONGO
 var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/roadtrippin';
@@ -38,11 +39,14 @@ app.get('/getAllTrips/:username', tripController.getAllTrips);
 
 app.post('/signin', userController.signin);
 app.post('/signup', userController.signup);
-app.use(userController.errorHandler);
 
 app.post('/chat', chatController.getChat);
-app.post('/yelp', tripController.yelp);
 app.post('/email', tripController.email);
+
+app.post('/yelp', tripController.yelp);
+app.post('/yelp/hotels', tripController.hotels);
+app.post('/yelp/attractions', tripController.attractions);
+
 
 // SOCKET.IO
 io.on('connection', function(socket){
