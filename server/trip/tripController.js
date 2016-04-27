@@ -127,7 +127,7 @@ module.exports = {
                 users.forEach(function(user) {
                   // if its an email send mail
                   if (validateEmail(user)) {
-                    var link = 'http://thunder-routes.herokuapp.com/#/trip/' + trip.id;
+                    var link = 'https://route-trippin.herokuapp.com/#/trip/' + trip.id;
                     sendMail(user, link);
                   }
                 });
